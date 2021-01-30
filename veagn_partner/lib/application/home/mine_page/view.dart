@@ -8,7 +8,7 @@ import 'state.dart';
 Widget buildView(MineState state, Dispatch dispatch, ViewService viewService) {
   return Scaffold(
     appBar: AppBar(
-      backgroundColor: CommonColors.defaultColors,
+      backgroundColor: CommonColors.yellowTheme,
     ),
 
   );
