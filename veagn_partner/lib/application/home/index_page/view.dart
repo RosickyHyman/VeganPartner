@@ -10,7 +10,17 @@ Widget buildView(IndexState state, Dispatch dispatch, ViewService viewService) {
   return Scaffold(
     appBar: AppBar(
       backgroundColor: CommonColors.defaultColors,
-      leading: Container(child: Icon(Icons.account_balance_wallet_outlined, color: CommonColors.whiteTheme)),
+      leading: Container(
+        width: 20.0,
+        height: 20.0,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle
+        ),
+        child: Image(
+          image: NetworkImage('https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=4205192766,3222152012&fm=26&gp=0.jpg'),
+          fit: BoxFit.cover,
+        ),
+      ),
     ),
     body: Column(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -28,7 +38,7 @@ Widget buildView(IndexState state, Dispatch dispatch, ViewService viewService) {
             labelStyle: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
             unselectedLabelStyle: const TextStyle(fontSize: 17.0),
             indicatorColor: CommonColors.defaultColors,
-            tabs: state.tabTitles.map((Map<String, String>item) {
+            tabs: state.tabTitles.map((Map<String, String> item) {
               return Container(
                 width: (screenWidth - 1) / 10,
                 child: Tab(text: item['title']),
@@ -62,7 +72,7 @@ Widget buildView(IndexState state, Dispatch dispatch, ViewService viewService) {
 }
 
 Widget _buildListView(int pageIndex, Map map, IndexState state, Dispatch dispatch, ViewService viewService) {
-  switch(map['type']) {
+  switch (map['type']) {
     case 'live':
       return Container(
         color: CommonColors.pinkTheme,
@@ -103,5 +113,5 @@ Widget _buildListView(int pageIndex, Map map, IndexState state, Dispatch dispatc
         color: CommonColors.defaultColors,
       );
       break;
-}
+  }
 }

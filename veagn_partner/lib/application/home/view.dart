@@ -1,87 +1,64 @@
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:partner/application/home/widget/navigation_keep_alive.dart';
 import 'package:partner/utils/common/common_colors.dart';
 
-import '../routers.dart';
 import 'state.dart';
-
-final _tabBarInfo = [
-  {'title': '工作台', 'normal': 'index_normal', 'selected': 'index_selected'},
-  {'title': '消息', 'normal': 'msg_normal', 'selected': 'msg_selected'},
-  {'title': '我', 'normal': 'mine_normal', 'selected': 'mine_selected'},
-];
-
-final _pages = [
-  Routers.router.buildPage('index_page', null),
-  Routers.router.buildPage('msg_page', null),
-  Routers.router.buildPage('mine_page', null),
-];
 
 Widget buildView(HomeState state, Dispatch dispatch, ViewService viewService) {
   return Scaffold(
     key: state.scaffoldKey,
-    body: WillPopScope(
-      onWillPop: () async {
-        if (state.lastPressedAt == null || DateTime.now().difference(state.lastPressedAt) > const Duration(seconds: 1)) {
-          state.lastPressedAt = DateTime.now();
-          state.scaffoldKey.currentState.showSnackBar(const SnackBar(
-            content: Text('再次点击,退出程序'),
-            backgroundColor: Color(0x4d333333),
-            behavior: SnackBarBehavior.fixed,
-          ));
-          return false;
-        }
-        return true;
-      },
-      child: CupertinoTabScaffold(
-        controller: state.controller,
-        tabBuilder: (context, index) {
-          return _pages[index];
-        },
-        tabBar: _buildCupTabBar(state, dispatch),
+    drawer: Drawer(
+      child: Column(
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: UserAccountsDrawerHeader(
+                  accountName: Text('琴心剑魄'),
+                  accountEmail: Text('rosicky_hyman@126.com'),
+                  currentAccountPicture: CircleAvatar(
+                    backgroundImage: NetworkImage(
+                        'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=4205192766,3222152012&fm=26&gp=0.jpg'),
+                  ), //用户头像
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: NetworkImage(
+                          'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1826865982,2286352878&fm=26&gp=0.jpg'),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          _buildDrawContent(Icon(Icons.home), 'Home', state, dispatch, viewService),
+          Divider(), // 增加一条线
+          _buildDrawContent(Icon(Icons.favorite), 'Collect', state, dispatch, viewService),
+          Divider(),
+          _buildDrawContent(Icon(Icons.history), 'History', state, dispatch, viewService),
+          Divider(),
+          _buildDrawContent(Icon(Icons.settings), 'Setting', state, dispatch, viewService),
+          Divider(),
+          _buildDrawContent(Icon(Icons.close), 'Cancel', state, dispatch, viewService),// 增加一条线
+        ],
       ),
     ),
+    body: NavigationKeepAlive(),
   );
 }
 
-CupertinoTabBar _buildCupTabBar(HomeState state, Dispatch dispatch) {
-  return CupertinoTabBar(
-    backgroundColor: CommonColors.mainBgColor,
-    items: <BottomNavigationBarItem>[
-      _buildBottomNavigationBarItem(state, 0),
-      _buildBottomNavigationBarItem(state, 1),
-      _buildBottomNavigationBarItem(state, 2),
-    ],
-    inactiveColor: CommonColors.bottomBarTextColor,
-    activeColor: CommonColors.pinkTheme,
-    currentIndex: state.controller.index,
+Widget _buildDrawContent(Icon icon, String title, HomeState state, Dispatch dispatch, ViewService viewService){
+  return ListTile(   //第四个功能项
+      leading: CircleAvatar(
+        child: icon,
+        backgroundColor: CommonColors.defaultColors,
+        foregroundColor: CommonColors.bgColor,
+      ),
+      title: new Text(title),
+      onTap: () {
+        Navigator.of(viewService.context).pop();
+      }
   );
-}
-
-BottomNavigationBarItem _buildBottomNavigationBarItem(HomeState state, int index) {
-  return BottomNavigationBarItem(
-    icon: _buildNavigationBarIcon(
-      index,
-      isSelected: false,
-    ),
-    activeIcon: _buildNavigationBarIcon(
-      index,
-      isSelected: true,
-    ),
-    // ignore: deprecated_member_use
-    title: Text(
-      _tabBarInfo[index]['title'],
-      style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w500),
-    ),
-  );
-}
-
-Widget _buildNavigationBarIcon(
-  int index, {
-  bool isSelected = false,
-}) {
-  final image = Image.asset("images/tab_bar/${_tabBarInfo[index][isSelected ? "selected" : "normal"]}.png");
-
-  return image;
 }
