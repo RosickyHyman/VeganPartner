@@ -11,9 +11,6 @@ class HomeState implements Cloneable<HomeState> {
 
   StreamSubscription traceSub;
 
-  /// 未读消息数量
-  int unreadMessageCount;
-
   ///上次点击时间
   DateTime lastPressedAt;
 
@@ -23,7 +20,6 @@ class HomeState implements Cloneable<HomeState> {
       ..scaffoldKey = scaffoldKey
       ..controller = controller
       ..traceSub = traceSub
-      ..unreadMessageCount = unreadMessageCount
       ..lastPressedAt = lastPressedAt;
   }
 
@@ -33,7 +29,6 @@ HomeState initState(Map<String, dynamic> args) {
   final state = HomeState();
   state.scaffoldKey = GlobalKey<ScaffoldState>();
   state.controller = CupertinoTabController(initialIndex: 0);
-  state.unreadMessageCount = 0;
 
   return state;
 }
