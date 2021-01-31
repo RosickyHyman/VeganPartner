@@ -4,9 +4,10 @@ import 'state.dart';
 
 Effect<HomeState> buildEffect() {
   return combineEffects(<Object, Effect<HomeState>>{
-    HomeAction.action: _onAction,
+    Lifecycle.initState: _init,
   });
 }
 
-void _onAction(Action action, Context<HomeState> ctx) {
+void _init(Action action, Context<HomeState> ctx) {
+
 }

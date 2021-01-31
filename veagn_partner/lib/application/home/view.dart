@@ -1,6 +1,7 @@
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:partner/utils/common/common_colors.dart';
 import 'package:partner/utils/other/hex_color.dart';
 
 import '../routers.dart';
@@ -48,14 +49,14 @@ Widget buildView(HomeState state, Dispatch dispatch, ViewService viewService) {
 
 CupertinoTabBar _buildCupTabBar(HomeState state, Dispatch dispatch) {
   return CupertinoTabBar(
-    backgroundColor: HexColor('#F7F7F7'),
+    backgroundColor: CommonColors.mainBgColor,
     items: <BottomNavigationBarItem>[
       _buildBottomNavigationBarItem(state, 0),
       _buildBottomNavigationBarItem(state, 1),
       _buildBottomNavigationBarItem(state, 2),
     ],
-    inactiveColor: HexColor('#6B6B6B'),
-    activeColor: HexColor('#EF5B9C'),
+    inactiveColor: CommonColors.bottomBarTextColor,
+    activeColor: CommonColors.pinkTheme,
     currentIndex: state.controller.index,
   );
 }

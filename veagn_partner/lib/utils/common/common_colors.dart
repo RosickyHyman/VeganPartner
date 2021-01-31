@@ -25,7 +25,14 @@ class CommonColors{
 
   static final Color bgColor = HexColor('#F2F2F2');
 
+  static final Color mainBgColor = HexColor('#F7F7F7');
+
+  static final Color snackBgColor = HexColor('#4d333333');
+
   static final Color tabBarTextColor = HexColor('#666666');
+
+  static final Color bottomBarTextColor = HexColor('#6B6B6B');
+
 
 
 }

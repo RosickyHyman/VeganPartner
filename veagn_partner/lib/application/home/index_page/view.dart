@@ -1,7 +1,6 @@
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
 import 'package:partner/utils/common/common_colors.dart';
-import 'package:partner/utils/other/hex_color.dart';
 
 import 'state.dart';
 
@@ -26,7 +25,7 @@ Widget buildView(IndexState state, Dispatch dispatch, ViewService viewService) {
             controller: state.mTabController,
             labelColor: CommonColors.defaultColors,
             unselectedLabelColor: CommonColors.tabBarTextColor,
-            labelStyle: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600),
+            labelStyle: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
             unselectedLabelStyle: const TextStyle(fontSize: 17.0),
             indicatorColor: CommonColors.defaultColors,
             tabs: state.tabTitles.map((item) {
@@ -37,7 +36,7 @@ Widget buildView(IndexState state, Dispatch dispatch, ViewService viewService) {
             }).toList(),
           ),
         ),
-        Container(color: CommonColors.bgColor, height: 8),
+        Container(color: CommonColors.bgColor, height: 5),
         Expanded(
           child: Container(
             color: CommonColors.bgColor,
