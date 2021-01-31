@@ -11,7 +11,7 @@ class IndexState implements Cloneable<IndexState> {
     {'type': 'anti', 'title': '抗疫'},
     {'type': 'wellOff', 'title': '小康'},
   ];
-  int pageIndex = 0;
+  int pageIndex = 1;
   int lastPageIndex = 0;
 
   int currentPage = 0;
@@ -23,6 +23,7 @@ class IndexState implements Cloneable<IndexState> {
   PageController mPageController = PageController(initialPage: 0);
   var isPageCanChanged = true;
 
+  List list;
   @override
   IndexState clone() {
     return IndexState()
@@ -34,7 +35,8 @@ class IndexState implements Cloneable<IndexState> {
       ..isPageCanChanged = isPageCanChanged
       ..currentPage = currentPage
       ..scrollController = scrollController
-      ..controller = controller;
+      ..controller = controller
+      ..list= list;
   }
 }
 

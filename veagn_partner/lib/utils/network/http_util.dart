@@ -120,7 +120,7 @@ class HttpUtil {
 
       if (response?.statusCode == 200) {
         if (response.data is Map<dynamic, dynamic>) {
-          if (response.data['code'] == 0 || response.data['code'] == 200) {
+          if (response.data['error_code'] == 0 || response.data['error_code'] == 200) {
             if (success != null) {
               try {
                 success(response.data);
