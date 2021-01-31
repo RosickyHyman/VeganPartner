@@ -29,7 +29,7 @@ class CommonColors{
 
   static final Color mainBgColor = HexColor('#F7F7F7');
 
-  static final Color snackBgColor = HexColor('#4d333333');
+  static final Color mineAdBgColor = HexColor('#C85B7A');
 
   static final Color tabBarTextColor = HexColor('#666666');
 

@@ -65,7 +65,21 @@ Widget buildView(HomeState state, Dispatch dispatch, ViewService viewService) {
         ],
       ),
     ),
-    body: _buildNavigationKeepAlive(state, dispatch, viewService),
+    body:  WillPopScope(
+      onWillPop: () async {
+    if (state.lastPressedAt == null || DateTime.now().difference(state.lastPressedAt) > const Duration(seconds: 1)) {
+      state.lastPressedAt = DateTime.now();
+      state.scaffoldKey.currentState.showSnackBar(const SnackBar(
+        content: Text('再次点击,退出程序'),
+        backgroundColor: Color(0x4d333333),
+        behavior: SnackBarBehavior.fixed,
+      ));
+      return false;
+    }
+    return true;
+  },
+  child: _buildNavigationKeepAlive(state, dispatch, viewService),
+  ),
   );
 }
 
