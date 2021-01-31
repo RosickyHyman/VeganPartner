@@ -28,10 +28,10 @@ Widget buildView(IndexState state, Dispatch dispatch, ViewService viewService) {
             labelStyle: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
             unselectedLabelStyle: const TextStyle(fontSize: 17.0),
             indicatorColor: CommonColors.defaultColors,
-            tabs: state.tabTitles.map((item) {
+            tabs: state.tabTitles.map((Map<String, String>item) {
               return Container(
                 width: (screenWidth - 1) / 10,
-                child: Tab(text: item),
+                child: Tab(text: item['title']),
               );
             }).toList(),
           ),
@@ -50,8 +50,8 @@ Widget buildView(IndexState state, Dispatch dispatch, ViewService viewService) {
               controller: state.mPageController,
               itemBuilder: (BuildContext context, int index) {
                 state.pageIndex = index;
-                final List list = [];
-                return _buildListView(index, list, state, dispatch, viewService);
+                final Map map = state.tabTitles[index];
+                return _buildListView(index, map, state, dispatch, viewService);
               },
             ),
           ),
@@ -61,8 +61,47 @@ Widget buildView(IndexState state, Dispatch dispatch, ViewService viewService) {
   );
 }
 
-Widget _buildListView(int pageIndex, List list, IndexState state, Dispatch dispatch, ViewService viewService) {
-  return Container(
-    color: CommonColors.defaultColors,
-  );
+Widget _buildListView(int pageIndex, Map map, IndexState state, Dispatch dispatch, ViewService viewService) {
+  switch(map['type']) {
+    case 'live':
+      return Container(
+        color: CommonColors.pinkTheme,
+      );
+      break;
+    case 'recommend':
+      return Container(
+        color: CommonColors.purpleTheme,
+      );
+      break;
+    case 'hot':
+      return Container(
+        color: CommonColors.redTheme,
+      );
+      break;
+    case 'chaiBan':
+      return Container(
+        color: CommonColors.greenTheme,
+      );
+      break;
+    case 'film':
+      return Container(
+        color: CommonColors.blueTheme,
+      );
+      break;
+    case 'anti':
+      return Container(
+        color: CommonColors.blackTheme,
+      );
+      break;
+    case 'wellOff':
+      return Container(
+        color: CommonColors.yellowTheme,
+      );
+      break;
+    default:
+      return Container(
+        color: CommonColors.defaultColors,
+      );
+      break;
+}
 }

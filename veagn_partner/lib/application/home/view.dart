@@ -2,7 +2,6 @@ import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:partner/utils/common/common_colors.dart';
-import 'package:partner/utils/other/hex_color.dart';
 
 import '../routers.dart';
 import 'state.dart';
@@ -25,7 +24,6 @@ Widget buildView(HomeState state, Dispatch dispatch, ViewService viewService) {
     body: WillPopScope(
       onWillPop: () async {
         if (state.lastPressedAt == null || DateTime.now().difference(state.lastPressedAt) > const Duration(seconds: 1)) {
-          //两次点击间隔超过1秒则重新计时
           state.lastPressedAt = DateTime.now();
           state.scaffoldKey.currentState.showSnackBar(const SnackBar(
             content: Text('再次点击,退出程序'),
@@ -82,8 +80,6 @@ BottomNavigationBarItem _buildBottomNavigationBarItem(HomeState state, int index
 Widget _buildNavigationBarIcon(
   int index, {
   bool isSelected = false,
-  bool haveBadge = false,
-  int badgeValue,
 }) {
   final image = Image.asset("images/tab_bar/${_tabBarInfo[index][isSelected ? "selected" : "normal"]}.png");
 

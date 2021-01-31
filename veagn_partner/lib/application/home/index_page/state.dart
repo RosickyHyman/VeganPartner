@@ -2,11 +2,17 @@ import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
 
 class IndexState implements Cloneable<IndexState> {
-
-  var tabTitles = ['直播', '推荐', '热门', '追番', '影视', '抗疫', '小康'];
+  var tabTitles = [
+    {'type': 'live', 'title': '直播'},
+    {'type': 'recommend', 'title': '推荐'},
+    {'type': 'hot', 'title': '热门'},
+    {'type': 'chaiBan', 'title': '追番'},
+    {'type': 'film', 'title': '影视'},
+    {'type': 'anti', 'title': '抗疫'},
+    {'type': 'wellOff', 'title': '小康'},
+  ];
   int pageIndex = 0;
   int lastPageIndex = 0;
-
 
   int currentPage = 0;
 
@@ -16,10 +22,6 @@ class IndexState implements Cloneable<IndexState> {
   TabController mTabController;
   PageController mPageController = PageController(initialPage: 0);
   var isPageCanChanged = true;
-
-  String searchText = '';
-
-  Map filterMap = {};
 
   @override
   IndexState clone() {
@@ -32,13 +34,10 @@ class IndexState implements Cloneable<IndexState> {
       ..isPageCanChanged = isPageCanChanged
       ..currentPage = currentPage
       ..scrollController = scrollController
-      ..searchText = searchText
-      ..controller = controller
-      ..filterMap = filterMap;
+      ..controller = controller;
   }
 }
 
 IndexState initState(Map<String, dynamic> args) {
-  return IndexState()
-    ..controller = TextEditingController();
+  return IndexState()..controller = TextEditingController();
 }
