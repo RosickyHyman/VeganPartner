@@ -24,6 +24,7 @@ class Routers {
     pages: <String, Page<Object, dynamic>>{
       "home_page": HomePage(),
 
+      /// home
       'index_page': IndexPage(),
       'msg_page': MessagePage(),
       'mine_page': MinePage(),
