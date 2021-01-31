@@ -1,6 +1,7 @@
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
 import 'package:partner/utils/common/common_colors.dart';
+import 'package:partner/utils/other/hex_color.dart';
 
 import 'state.dart';
 
@@ -13,17 +14,18 @@ Widget buildView(IndexState state, Dispatch dispatch, ViewService viewService) {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         Container(
-          color: CommonColors.bgColor,
+          color: HexColor(CommonColors.white),
           padding: const EdgeInsets.only(left: 1, right: 1),
           alignment: Alignment.center,
           child: TabBar(
             isScrollable: true,
             controller: state.mTabController,
-            labelColor: CommonColors.defaultColors,
-            unselectedLabelColor: CommonColors.tabBarTextColor,
+            labelColor: HexColor(CommonColors.defaultColors),
+            unselectedLabelColor: HexColor(CommonColors.tabBarTextColor),
+            // CommonColors.tabBarTextColor,
             labelStyle: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.w600),
             unselectedLabelStyle: const TextStyle(fontSize: 19.0),
-            indicatorColor: CommonColors.defaultColors,
+            indicatorColor: HexColor(CommonColors.defaultColors),
             tabs: state.tabTitles.map((Map<String, String> item) {
               return Container(
                 width: (screenWidth - 1) / 10,
@@ -32,10 +34,10 @@ Widget buildView(IndexState state, Dispatch dispatch, ViewService viewService) {
             }).toList(),
           ),
         ),
-        Container(color: CommonColors.bgColor, height: 5),
+        Container(color: HexColor(CommonColors.bgColor), height: 5),
         Expanded(
           child: Container(
-            color: CommonColors.bgColor,
+            color: HexColor(CommonColors.bgColor),
             child: PageView.builder(
               itemCount: state.tabTitles.length,
               onPageChanged: (index) {
@@ -64,37 +66,37 @@ Widget _buildListView(int pageIndex, Map map, IndexState state, Dispatch dispatc
       break;
     case 'recommend':
       return Container(
-        color: CommonColors.purpleTheme,
+        color: HexColor(CommonColors.purpleTheme),
       );
       break;
     case 'hot':
       return Container(
-        color: CommonColors.redTheme,
+        color: HexColor(CommonColors.redTheme),
       );
       break;
     case 'chaiBan':
       return Container(
-        color: CommonColors.greenTheme,
+        color: HexColor(CommonColors.greenTheme),
       );
       break;
     case 'film':
       return Container(
-        color: CommonColors.blueTheme,
+        color: HexColor(CommonColors.blueTheme),
       );
       break;
     case 'anti':
       return Container(
-        color: CommonColors.blackTheme,
+        color: HexColor(CommonColors.blackTheme),
       );
       break;
     case 'wellOff':
       return Container(
-        color: CommonColors.yellowTheme,
+        color: HexColor(CommonColors.yellowTheme),
       );
       break;
     default:
       return Container(
-        color: CommonColors.defaultColors,
+        color: HexColor(CommonColors.defaultColors),
       );
       break;
   }
@@ -151,7 +153,7 @@ Widget _buildItemView(
                     padding: const EdgeInsets.fromLTRB(0, 0, 30, 0),
                     child: Text(
                       map['title'] ?? '',
-                      style: TextStyle(color: CommonColors.tabBarTextColor, fontWeight: FontWeight.bold, fontSize: 16),
+                      style: TextStyle(color: HexColor(CommonColors.tabBarTextColor), fontWeight: FontWeight.bold, fontSize: 16),
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -159,7 +161,7 @@ Widget _buildItemView(
                     padding: const EdgeInsets.fromLTRB(0, 0, 15, 0),
                     child: Text(
                       map['des'] ?? '',
-                      style: TextStyle(color: CommonColors.tabBarTextColor, fontSize: 14),
+                      style: TextStyle(color: HexColor(CommonColors.tabBarTextColor), fontSize: 14),
                     ),
                   ),
                 ],

@@ -2,6 +2,7 @@ import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:partner/utils/common/common_colors.dart';
+import 'package:partner/utils/other/hex_color.dart';
 
 import 'action.dart';
 import 'state.dart';
@@ -13,10 +14,11 @@ Widget buildView(HomeState state, Dispatch dispatch, ViewService viewService) {
         ? PreferredSize(
             preferredSize: Size.fromHeight(50.0),
             child: AppBar(
-              backgroundColor: CommonColors.defaultColors,
-              title: InkWell(
+              backgroundColor: HexColor(CommonColors.defaultColors),
+              leading: InkWell(
                 onTap: () {
-                  dispatch(HomeActionCreator.onSetCurrentIndexAction(2));
+                  state.scaffoldKey.currentState.openDrawer();
+                  // dispatch(HomeActionCreator.onSetCurrentIndexAction(2));
                 },
                 child: Container(
                   padding: const EdgeInsets.only(left: 0.0, top: 5.0, bottom: 5.0),
@@ -29,7 +31,7 @@ Widget buildView(HomeState state, Dispatch dispatch, ViewService viewService) {
           )
         : PreferredSize(
             preferredSize: Size.fromHeight(0),
-            child: AppBar(backgroundColor: CommonColors.defaultColors),
+            child: AppBar(backgroundColor: HexColor(CommonColors.defaultColors)),
           ),
     drawer: Drawer(
       child: Column(
@@ -65,21 +67,22 @@ Widget buildView(HomeState state, Dispatch dispatch, ViewService viewService) {
         ],
       ),
     ),
-    body:  WillPopScope(
+    body: WillPopScope(
       onWillPop: () async {
-    if (state.lastPressedAt == null || DateTime.now().difference(state.lastPressedAt) > const Duration(seconds: 1)) {
-      state.lastPressedAt = DateTime.now();
-      state.scaffoldKey.currentState.showSnackBar(const SnackBar(
-        content: Text('再次点击,退出程序'),
-        backgroundColor: Color(0x4d333333),
-        behavior: SnackBarBehavior.fixed,
-      ));
-      return false;
-    }
-    return true;
-  },
-  child: _buildNavigationKeepAlive(state, dispatch, viewService),
-  ),
+        if (state.lastPressedAt == null || DateTime.now().difference(state.lastPressedAt) > const Duration(seconds: 1)) {
+          state.lastPressedAt = DateTime.now();
+          state.scaffoldKey.currentState.showSnackBar(SnackBar(
+            content: Text('再次点击,退出程序'),
+            backgroundColor: HexColor(CommonColors.snackBgColor),
+            // Color(0x4d333333),
+            behavior: SnackBarBehavior.fixed,
+          ));
+          return false;
+        }
+        return true;
+      },
+      child: _buildNavigationKeepAlive(state, dispatch, viewService),
+    ),
   );
 }
 
@@ -87,8 +90,8 @@ Widget _buildDrawContent(Icon icon, String title, HomeState state, Dispatch disp
   return ListTile(
       leading: CircleAvatar(
         child: icon,
-        backgroundColor: CommonColors.defaultColors,
-        foregroundColor: CommonColors.bgColor,
+        backgroundColor: HexColor(CommonColors.defaultColors),
+        foregroundColor: HexColor(CommonColors.bgColor),
       ),
       title: new Text(title),
       onTap: () {
@@ -125,7 +128,7 @@ BottomNavigationBarItem _buildBottomNavigationBarItem(HomeState state, Dispatch 
     // ignore: deprecated_member_use
     title: Text(
       state.tabBarInfo[index]['title'],
-      style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w500),
+      style: TextStyle(fontSize: 10, fontWeight: FontWeight.w500, color: HexColor(index == state.currentIndex ? CommonColors.defaultColors : CommonColors.tabBarTextColor)),
     ),
   );
 }

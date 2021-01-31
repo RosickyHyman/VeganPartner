@@ -2,19 +2,20 @@ import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
 import 'package:partner/utils/common/common_colors.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:partner/utils/other/hex_color.dart';
 
 import 'state.dart';
 
 Widget buildView(MineState state, Dispatch dispatch, ViewService viewService) {
   return Scaffold(
     body: Material(
-      color: CommonColors.defaultColors,
+      color: HexColor(CommonColors.defaultColors).withAlpha(255),
       child: Column(
         children: <Widget>[
           _buildTopView(state, dispatch, viewService),
           Expanded(
             child: Container(
-              color: CommonColors.yellowTheme,
+              color: HexColor(CommonColors.yellowTheme),
             ),
           ),
         ],
@@ -28,8 +29,7 @@ Widget _buildTopView(MineState state, Dispatch dispatch, ViewService viewService
     child: Column(
       children: [
         Container(
-
-          margin: const EdgeInsets.only(right: 10.0,top: 5.0),
+          margin: const EdgeInsets.only(right: 10.0, top: 5.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
@@ -61,7 +61,7 @@ Widget _buildTopView(MineState state, Dispatch dispatch, ViewService viewService
                     Container(
                         child: Text(
                       '琴心剑魄',
-                      style: TextStyle(color: CommonColors.mainBgColor, fontSize: 16.0),
+                      style: TextStyle(color: HexColor(CommonColors.mainBgColor), fontSize: 16.0),
                     )),
                   ],
                 ),
@@ -72,7 +72,7 @@ Widget _buildTopView(MineState state, Dispatch dispatch, ViewService viewService
               child: Icon(
                 Icons.arrow_forward_ios_rounded,
                 size: 15,
-                color: CommonColors.bgColor,
+                color: HexColor(CommonColors.bgColor),
               ),
             )
           ],
@@ -84,11 +84,11 @@ Widget _buildTopView(MineState state, Dispatch dispatch, ViewService viewService
           children: [
             _buildPersonDataView(state, dispatch, viewService, '动态', '7'),
             Center(
-              child: Container(width: 1, height: 10, color: CommonColors.mainBgColor),
+              child: Container(width: 1, height: 10, color: HexColor(CommonColors.mainBgColor)),
             ),
             _buildPersonDataView(state, dispatch, viewService, '关注', '10'),
             Center(
-              child: Container(width: 1, height: 10, color: CommonColors.mainBgColor),
+              child: Container(width: 1, height: 10, color: HexColor(CommonColors.mainBgColor)),
             ),
             _buildPersonDataView(state, dispatch, viewService, '粉丝', '6'),
           ],
@@ -96,7 +96,7 @@ Widget _buildTopView(MineState state, Dispatch dispatch, ViewService viewService
         SizedBox(height: 15),
         Container(
             margin: const EdgeInsets.only(left: 15.0, right: 15.0),
-            decoration: BoxDecoration(color: CommonColors.mineAdBgColor, borderRadius: BorderRadius.only(topLeft: Radius.circular(5), topRight: Radius.circular(5))),
+            decoration: BoxDecoration(color: HexColor(CommonColors.snackBgColor), borderRadius: BorderRadius.only(topLeft: Radius.circular(5), topRight: Radius.circular(5))),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -108,13 +108,13 @@ Widget _buildTopView(MineState state, Dispatch dispatch, ViewService viewService
                       Container(
                           child: Text(
                         '开通大会员',
-                        style: TextStyle(color: CommonColors.white, fontSize: 15.0, fontWeight: FontWeight.w500),
+                        style: TextStyle(color: HexColor(CommonColors.white), fontSize: 15.0, fontWeight: FontWeight.w500),
                       )),
                       SizedBox(height: 3),
                       Container(
                           child: Text(
                         '超多内容，权益等你来',
-                        style: TextStyle(color: CommonColors.mainBgColor, fontSize: 13.0),
+                        style: TextStyle(color: HexColor(CommonColors.mainBgColor), fontSize: 13.0),
                       )),
                     ],
                   ),
@@ -124,7 +124,7 @@ Widget _buildTopView(MineState state, Dispatch dispatch, ViewService viewService
                   child: Icon(
                     Icons.arrow_forward_ios_rounded,
                     size: 15,
-                    color: CommonColors.bgColor,
+                    color: HexColor(CommonColors.bgColor),
                   ),
                 )
               ],
@@ -142,13 +142,13 @@ Widget _buildPersonDataView(MineState state, Dispatch dispatch, ViewService view
         Container(
             child: Text(
           data,
-          style: TextStyle(color: CommonColors.mainBgColor, fontSize: 16.0),
+          style: TextStyle(color: HexColor(CommonColors.mainBgColor), fontSize: 16.0),
         )),
         SizedBox(height: 5),
         Container(
             child: Text(
           title,
-          style: TextStyle(color: CommonColors.mainBgColor, fontSize: 12.0),
+          style: TextStyle(color: HexColor(CommonColors.mainBgColor), fontSize: 12.0),
         )),
       ],
     ),
