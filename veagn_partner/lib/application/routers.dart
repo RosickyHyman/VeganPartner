@@ -1,10 +1,16 @@
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart' hide Action, Page;
-import 'package:partner/application/home/index_page/index_list_page/page.dart';
+
+
 import 'package:partner/application/home/index_page/page.dart';
+import 'package:partner/application/home/index_page/index_list_page/page.dart';
+
 import 'package:partner/application/home/message_page/page.dart';
-import 'package:partner/application/home/mine_page/change_skin/page.dart';
+
 import 'package:partner/application/home/mine_page/page.dart';
+import 'package:partner/application/home/mine_page/change_skin/page.dart';
+
+import 'package:partner/application/splash/page.dart';
 
 
 import 'global_store/state.dart';
@@ -24,8 +30,8 @@ class Routers {
   /// 3. 对所需的页面进行 AOP 的增强
   static final AbstractRoutes router = PageRoutes(
     pages: <String, Page<Object, dynamic>>{
-      "home_page": HomePage(),
-
+      'home_page': HomePage(),
+'splash_page':SplashPage(),
       /// home
       'index_page': IndexPage(),
       'msg_page': MessagePage(),

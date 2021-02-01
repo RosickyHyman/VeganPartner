@@ -1,5 +1,7 @@
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/animation.dart';
+import 'package:partner/utils/common/common_colors.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'action.dart';
 import 'state.dart';
 
@@ -16,7 +18,7 @@ void _onRefreshAction(Action action, Context<HomeState> ctx) {
 }
 
 void _init(Action action, Context<HomeState> ctx) {
-
+  ctx.dispatch(HomeActionCreator.onAction());
 }
 
 void _setCurrentIndex(Action action, Context<HomeState> ctx) {

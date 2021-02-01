@@ -18,7 +18,7 @@ Effect<ChangeSkinState> buildEffect() {
 }
 
 Future<void> _init(Action action, Context<ChangeSkinState> ctx) async {
-  var list = [
+  ctx.state.list = [
     {'title': '少女粉', 'color': '#FA7298', 'isSelect': false},
     {'title': '高能红', 'color': '#F44236', 'isSelect': false},
     {'title': '咸蛋黄', 'color': '#FEC107', 'isSelect': false},
@@ -28,14 +28,17 @@ Future<void> _init(Action action, Context<ChangeSkinState> ctx) async {
   ];
   final prefs = await SharedPreferences.getInstance();
 
-  final String color = prefs.getString('themeColor') ?? CommonColors.defaultColors;
+  final String color = prefs.getString('themeColor') == null || prefs.getString('themeColor') == '' ? CommonColors.defaultColors : prefs.getString('themeColor');
 
-  for (final Map map in list) {
+  for (final Map map in ctx.state.list) {
     if (color == map['color']) {
-      map['color'] = true;
+      map['isSelect'] = true;
+    } else {
+      map['isSelect'] = false;
     }
   }
-  ctx.state.list = list;
+
+  ctx.dispatch(ChangeSkinActionCreator.onAction());
 }
 
 Future<void> _changeSkinAction(Action action, Context<ChangeSkinState> ctx) async {
@@ -45,7 +48,6 @@ Future<void> _changeSkinAction(Action action, Context<ChangeSkinState> ctx) asyn
 
   ctx.state.lastIndex = index;
   CommonColors.defaultColors = ctx.state.list[index]['color'];
-
 
   final prefs = await SharedPreferences.getInstance();
 

@@ -14,14 +14,11 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-
-
-    _initSp();
   }
 
   @override
   Widget build(BuildContext context) {
-    var defaultPage = Routers.router.buildPage('home_page', null);
+    var defaultPage = Routers.router.buildPage('splash_page', null);
 
 //    bool isLogin = true;
 //    if (isLogin == false) {
@@ -44,11 +41,5 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  Future<void> _initSp() async {
-    final prefs = await SharedPreferences.getInstance();
 
-    final String color = prefs.getString('themeColor') ?? CommonColors.defaultColors;
-
-    CommonColors.defaultColors = color;
-  }
 }
