@@ -12,7 +12,7 @@ Effect<IndexListState> buildEffect() {
 }
 
 void _init(Action action, Context<IndexListState> ctx) {
-  _getData(action, ctx);
+  // _getData(action, ctx);
 }
 
 

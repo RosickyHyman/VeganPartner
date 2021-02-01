@@ -1,28 +1,21 @@
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 import 'state.dart';
 
 Widget buildView(SplashState state, Dispatch dispatch, ViewService viewService) {
-  return _buildSplash();
+  return _buildSplash(viewService);
 }
 
-Widget _buildSplash() {
+Widget _buildSplash(ViewService viewService) {
   return Scaffold(
-    backgroundColor: Colors.white,
     body: Container(
       alignment: Alignment.center,
-      child:
-        Container(
-          child: SvgPicture.asset(
-            'images/splash/couple.svg',
-            width: 446,
-            height: 459,
-            fit: BoxFit.scaleDown,
-          ),
-        ),
-
+      margin: const EdgeInsets.only(left: 30.0, right: 30.0, bottom: 50.0),
+      child: Image.asset(
+        'images/splash/couple_read.png',
+        fit: BoxFit.scaleDown,
+      ),
     ),
   );
 }

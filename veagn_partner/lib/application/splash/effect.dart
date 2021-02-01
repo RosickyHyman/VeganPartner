@@ -27,6 +27,5 @@ Future<void> _initSp(Context<SplashState> ctx) async {
   final String color = prefs.getString('themeColor')== null || prefs.getString('themeColor') == ''? CommonColors.defaultColors : prefs.getString('themeColor');
 
   CommonColors.defaultColors = color;
-
-  Navigator.of(ctx.context).pushReplacementNamed('home_page');
+  Navigator.of(ctx.context).popAndPushNamed('home_page');
 }

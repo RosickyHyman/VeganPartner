@@ -140,6 +140,6 @@ Widget _buildNavigationBarIcon(
   int index, {
   bool isSelected = false,
 }) {
-  final image = Image.asset("images/tab_bar/${state.tabBarInfo[index][isSelected ? "selected" : "normal"]}.png");
+  final image = Image.asset('images/tab_bar/${state.tabBarInfo[index][isSelected ? 'selected' : 'normal']}.png');
   return image;
 }
