@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart' hide Action;
+import 'package:partner/utils/common/common_colors.dart';
+import 'package:partner/utils/other/hex_color.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'routers.dart';
 
@@ -12,6 +15,8 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
 
+
+    _initSp();
   }
 
   @override
@@ -28,7 +33,7 @@ class _MyAppState extends State<MyApp> {
       navigatorKey: Routers.navigatorKey,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primaryColor: Colors.pink,
+        primaryColor: HexColor(CommonColors.defaultColors),
       ),
       home: defaultPage,
       onGenerateRoute: (RouteSettings settings) {
@@ -37,5 +42,13 @@ class _MyAppState extends State<MyApp> {
         });
       },
     );
+  }
+
+  Future<void> _initSp() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    final String color = prefs.getString('themeColor') ?? CommonColors.defaultColors;
+
+    CommonColors.defaultColors = color;
   }
 }
