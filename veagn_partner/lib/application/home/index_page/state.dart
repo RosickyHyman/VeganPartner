@@ -23,7 +23,6 @@ class IndexState implements Cloneable<IndexState> {
   PageController mPageController = PageController(initialPage: 0);
   var isPageCanChanged = true;
 
-  List list;
   @override
   IndexState clone() {
     return IndexState()
@@ -35,8 +34,7 @@ class IndexState implements Cloneable<IndexState> {
       ..isPageCanChanged = isPageCanChanged
       ..currentPage = currentPage
       ..scrollController = scrollController
-      ..controller = controller
-      ..list= list;
+      ..controller = controller;
   }
 }
 

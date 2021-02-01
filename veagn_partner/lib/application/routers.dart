@@ -1,7 +1,9 @@
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart' hide Action, Page;
+import 'package:partner/application/home/index_page/index_list_page/page.dart';
 import 'package:partner/application/home/index_page/page.dart';
 import 'package:partner/application/home/message_page/page.dart';
+import 'package:partner/application/home/mine_page/change_skin/page.dart';
 import 'package:partner/application/home/mine_page/page.dart';
 
 
@@ -28,6 +30,9 @@ class Routers {
       'index_page': IndexPage(),
       'msg_page': MessagePage(),
       'mine_page': MinePage(),
+
+      'index_list_page': IndexListPage(),
+      'change_skin_page': ChangeSkinPage(),
 
 
 
@@ -101,3 +106,4 @@ EffectMiddleware<T> _pageAnalyticsMiddleware<T>({String tag = 'redux'}) {
     };
   };
 }
+

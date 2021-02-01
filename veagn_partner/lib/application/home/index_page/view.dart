@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:partner/utils/common/common_colors.dart';
 import 'package:partner/utils/other/hex_color.dart';
 
+import '../../routers.dart';
 import 'state.dart';
 
 Widget buildView(IndexState state, Dispatch dispatch, ViewService viewService) {
@@ -22,13 +23,12 @@ Widget buildView(IndexState state, Dispatch dispatch, ViewService viewService) {
             controller: state.mTabController,
             labelColor: HexColor(CommonColors.defaultColors),
             unselectedLabelColor: HexColor(CommonColors.tabBarTextColor),
-            // CommonColors.tabBarTextColor,
-            labelStyle: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.w600),
-            unselectedLabelStyle: const TextStyle(fontSize: 19.0),
+            labelStyle: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600),
+            unselectedLabelStyle: const TextStyle(fontSize: 17.0),
             indicatorColor: HexColor(CommonColors.defaultColors),
             tabs: state.tabTitles.map((Map<String, String> item) {
               return Container(
-                width: (screenWidth - 1) / 10,
+                width: (screenWidth - 1) / 9,
                 child: Tab(text: item['title']),
               );
             }).toList(),
@@ -49,7 +49,7 @@ Widget buildView(IndexState state, Dispatch dispatch, ViewService viewService) {
               itemBuilder: (BuildContext context, int index) {
                 state.pageIndex = index;
                 final Map map = state.tabTitles[index];
-                return _buildListView(index, map, state, dispatch, viewService);
+                return Routers.router.buildPage('index_list_page', map);
               },
             ),
           ),
@@ -59,117 +59,3 @@ Widget buildView(IndexState state, Dispatch dispatch, ViewService viewService) {
   );
 }
 
-Widget _buildListView(int pageIndex, Map map, IndexState state, Dispatch dispatch, ViewService viewService) {
-  switch (map['type']) {
-    case 'live':
-      return _buildContentListView(state, dispatch, viewService);
-      break;
-    case 'recommend':
-      return Container(
-        color: HexColor(CommonColors.purpleTheme),
-      );
-      break;
-    case 'hot':
-      return Container(
-        color: HexColor(CommonColors.redTheme),
-      );
-      break;
-    case 'chaiBan':
-      return Container(
-        color: HexColor(CommonColors.greenTheme),
-      );
-      break;
-    case 'film':
-      return Container(
-        color: HexColor(CommonColors.blueTheme),
-      );
-      break;
-    case 'anti':
-      return Container(
-        color: HexColor(CommonColors.blackTheme),
-      );
-      break;
-    case 'wellOff':
-      return Container(
-        color: HexColor(CommonColors.yellowTheme),
-      );
-      break;
-    default:
-      return Container(
-        color: HexColor(CommonColors.defaultColors),
-      );
-      break;
-  }
-}
-
-Widget _buildContentListView(IndexState state, Dispatch dispatch, ViewService viewService) {
-  List list = state.list;
-  return ListView.separated(
-    itemCount: (list == null || list.isEmpty) ? 0 : list.length + 1,
-    physics: const AlwaysScrollableScrollPhysics(),
-    itemBuilder: (BuildContext context, int index) {
-      if (list.isNotEmpty && index == list.length) {
-        return Container(
-          alignment: Alignment.center,
-          padding: const EdgeInsets.only(top: 8, bottom: 8),
-          child: Text(
-            '共${list.length}个任务',
-            style: const TextStyle(color: Color(0xff999999), fontSize: 12),
-          ),
-        );
-      } else {
-        final Map map = list[index];
-        return _buildItemView(state, viewService, dispatch, map);
-      }
-    },
-    separatorBuilder: (BuildContext context, int index) {
-      return Container(height: 0);
-    },
-  );
-}
-
-Widget _buildItemView(
-  IndexState state,
-  ViewService viewService,
-  Dispatch dispatch,
-  Map map,
-) {
-  return GestureDetector(
-    child: Stack(
-      children: <Widget>[
-        Container(
-          padding: const EdgeInsets.only(left: 14, right: 14, top: 8.0),
-          constraints: const BoxConstraints(minHeight: 68),
-          child: Card(
-            shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8.0))),
-            elevation: 0,
-            child: Container(
-              padding: const EdgeInsets.fromLTRB(16, 8, 0, 13),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-                    padding: const EdgeInsets.fromLTRB(0, 0, 30, 0),
-                    child: Text(
-                      map['title'] ?? '',
-                      style: TextStyle(color: HexColor(CommonColors.tabBarTextColor), fontWeight: FontWeight.bold, fontSize: 16),
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Container(
-                    padding: const EdgeInsets.fromLTRB(0, 0, 15, 0),
-                    child: Text(
-                      map['des'] ?? '',
-                      style: TextStyle(color: HexColor(CommonColors.tabBarTextColor), fontSize: 14),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ],
-    ),
-  );
-}

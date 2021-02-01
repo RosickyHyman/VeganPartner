@@ -15,7 +15,7 @@ Widget buildView(MineState state, Dispatch dispatch, ViewService viewService) {
           _buildTopView(state, dispatch, viewService),
           Expanded(
             child: Container(
-              color: HexColor(CommonColors.yellowTheme),
+              color: HexColor(CommonColors.purpleTheme),
             ),
           ),
         ],
@@ -33,11 +33,27 @@ Widget _buildTopView(MineState state, Dispatch dispatch, ViewService viewService
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Container(child: SvgPicture.asset('images/home/mine/scan.svg', fit: BoxFit.cover), width: 25, height: 25),
+              InkWell(
+                child: Container(child: SvgPicture.asset('images/home/mine/scan.svg', fit: BoxFit.cover), width: 25, height: 25),
+                onTap: () {
+                  // Navigator.pushNamed(viewService.context, 'change_skin_page');
+                },
+              ),
               SizedBox(width: 10),
-              Container(child: SvgPicture.asset('images/home/mine/painter.svg', fit: BoxFit.cover), width: 27, height: 27),
+              InkWell(
+                child: Container(child: SvgPicture.asset('images/home/mine/painter.svg', fit: BoxFit.cover), width: 25, height: 25),
+                onTap: () {
+                  Navigator.pushNamed(viewService.context, 'change_skin_page');
+                },
+              ),
+
               SizedBox(width: 10),
-              Container(child: SvgPicture.asset('images/home/mine/moon.svg', fit: BoxFit.cover), width: 23, height: 23),
+              InkWell(
+                child: Container(child: SvgPicture.asset('images/home/mine/moon.svg', fit: BoxFit.cover), width: 25, height: 25),
+                onTap: () {
+                  // Navigator.pushNamed(viewService.context, 'change_skin_page');
+                },
+              ),
             ],
           ),
         ),
@@ -54,7 +70,8 @@ Widget _buildTopView(MineState state, Dispatch dispatch, ViewService viewService
                       height: 75,
                       padding: const EdgeInsets.only(left: 0.0, top: 5.0, bottom: 5.0),
                       child: CircleAvatar(
-                        backgroundImage: NetworkImage('https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=4205192766,3222152012&fm=26&gp=0.jpg'),
+                        backgroundImage:
+                            NetworkImage('https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=4205192766,3222152012&fm=26&gp=0.jpg'),
                       ),
                     ),
                     SizedBox(width: 10),
@@ -96,7 +113,9 @@ Widget _buildTopView(MineState state, Dispatch dispatch, ViewService viewService
         SizedBox(height: 15),
         Container(
             margin: const EdgeInsets.only(left: 15.0, right: 15.0),
-            decoration: BoxDecoration(color: HexColor(CommonColors.snackBgColor), borderRadius: BorderRadius.only(topLeft: Radius.circular(5), topRight: Radius.circular(5))),
+            decoration: BoxDecoration(
+                color: HexColor(CommonColors.snackBgColor),
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(5), topRight: Radius.circular(5))),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

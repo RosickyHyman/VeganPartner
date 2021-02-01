@@ -5,9 +5,14 @@ import 'state.dart';
 
 Effect<MessageState> buildEffect() {
   return combineEffects(<Object, Effect<MessageState>>{
-    MessageAction.action: _onAction,
+    Lifecycle.initState: _init,
+    MessageAction.onRefresh: _onRefreshAction,
   });
 }
 
-void _onAction(Action action, Context<MessageState> ctx) {
+void _onRefreshAction(Action action, Context<MessageState> ctx) {
+  ctx.dispatch(MessageActionCreator.onAction());
+}
+
+void _init(Action action, Context<MessageState> ctx) {
 }

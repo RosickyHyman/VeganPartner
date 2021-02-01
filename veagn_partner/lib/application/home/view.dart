@@ -2,6 +2,7 @@ import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:partner/utils/common/common_colors.dart';
+import 'package:partner/utils/config/theme_style.dart';
 import 'package:partner/utils/other/hex_color.dart';
 
 import 'action.dart';
@@ -12,7 +13,7 @@ Widget buildView(HomeState state, Dispatch dispatch, ViewService viewService) {
     key: state.scaffoldKey,
     appBar: state.currentIndex == 0
         ? PreferredSize(
-            preferredSize: Size.fromHeight(50.0),
+            preferredSize: Size.fromHeight(VeganThemeStyle.kNavBarPersistentHeight),
             child: AppBar(
               backgroundColor: HexColor(CommonColors.defaultColors),
               leading: InkWell(
