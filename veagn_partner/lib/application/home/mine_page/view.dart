@@ -34,14 +34,14 @@ Widget _buildTopView(MineState state, Dispatch dispatch, ViewService viewService
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               InkWell(
-                child: Container(child: SvgPicture.asset('images/home/mine/scan.svg', fit: BoxFit.cover), width: 25, height: 25),
+                child: Container(child: SvgPicture.asset('images/home/mine/scan.svg', fit: BoxFit.cover, width: 25, height: 25)),
                 onTap: () {
                   // Navigator.pushNamed(viewService.context, 'change_skin_page');
                 },
               ),
               SizedBox(width: 10),
               InkWell(
-                child: Container(child: SvgPicture.asset('images/home/mine/painter.svg', fit: BoxFit.cover), width: 25, height: 25),
+                child: Container(child: SvgPicture.asset('images/home/mine/painter.svg', fit: BoxFit.cover, width: 25, height: 25)),
                 onTap: () {
                   Navigator.pushNamed(viewService.context, 'change_skin_page');
                 },
@@ -49,7 +49,7 @@ Widget _buildTopView(MineState state, Dispatch dispatch, ViewService viewService
 
               SizedBox(width: 10),
               InkWell(
-                child: Container(child: SvgPicture.asset('images/home/mine/moon.svg', fit: BoxFit.cover), width: 25, height: 25),
+                child: Container(child: SvgPicture.asset('images/home/mine/moon.svg', fit: BoxFit.cover, width: 25, height: 25)),
                 onTap: () {
                   // Navigator.pushNamed(viewService.context, 'change_skin_page');
                 },

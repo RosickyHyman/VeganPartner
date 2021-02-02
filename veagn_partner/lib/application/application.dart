@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart' hide Action;
 import 'package:partner/utils/common/common_colors.dart';
 import 'package:partner/utils/other/hex_color.dart';
+import 'package:partner/widget/list/common/utils/screen_util.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'routers.dart';
@@ -20,6 +21,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     var defaultPage = Routers.router.buildPage('splash_page', null);
 
+    ScreenUtil.init(width: 750, height: 1334, allowFontScaling: true);
 //    bool isLogin = true;
 //    if (isLogin == false) {
 //      defaultPage = Routers.router.buildPage('login_page', null);

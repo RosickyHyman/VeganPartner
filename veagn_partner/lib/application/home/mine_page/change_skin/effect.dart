@@ -1,5 +1,4 @@
 import 'package:fish_redux/fish_redux.dart';
-import 'package:flutter/foundation.dart';
 import 'package:partner/application/home/index_page/action.dart';
 import 'package:partner/application/home/message_page/action.dart';
 import 'package:partner/utils/common/common_colors.dart';
@@ -30,8 +29,11 @@ Future<void> _init(Action action, Context<ChangeSkinState> ctx) async {
 
   final String color = prefs.getString('themeColor') == null || prefs.getString('themeColor') == '' ? CommonColors.defaultColors : prefs.getString('themeColor');
 
-  for (final Map map in ctx.state.list) {
+  for (int i = 0; i <  ctx.state.list.length; i++) {
+    Map map = ctx.state.list[i];
+
     if (color == map['color']) {
+      ctx.state.lastIndex = i;
       map['isSelect'] = true;
     } else {
       map['isSelect'] = false;

@@ -31,7 +31,7 @@ class HttpUtil {
 
   static void _configDio() {
     _instance = Dio();
-    _instance.options.baseUrl = UserConfigManager.instance.baseUrl;
+    _instance.options.baseUrl = UserConfigManager.instance.juHeBaseUrl;
     _instance.options.connectTimeout = GlobalConfig.connectTimeout;
     _instance.options.receiveTimeout = GlobalConfig.receiveTimeout;
   }
@@ -42,9 +42,9 @@ class HttpUtil {
   }
 
   /// 更新请求默认baseUrl
-  static void updateBaseUrl() {
+  static void updateBaseUrl(String string) {
     final dio = createInstance();
-    dio.options.baseUrl = UserConfigManager.instance.baseUrl;
+    dio.options.baseUrl = string;
   }
 
 

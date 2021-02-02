@@ -2,28 +2,23 @@ import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
 import 'package:partner/utils/common/common_colors.dart';
 import 'package:partner/utils/other/hex_color.dart';
-
 import 'state.dart';
 
-Widget buildView(IndexListState state, Dispatch dispatch, ViewService viewService) {
+Widget buildView(PicInsectListState state, Dispatch dispatch, ViewService viewService) {
   return _buildListView(state, dispatch, viewService);
 }
 
-Widget _buildListView(IndexListState state, Dispatch dispatch, ViewService viewService) {
+Widget _buildListView(PicInsectListState state, Dispatch dispatch, ViewService viewService) {
   Map map = state.map;
   switch (map['type']) {
     case 'live':
       return _buildContentListView(state, dispatch, viewService);
       break;
     case 'recommend':
-      return Container(
-        color: HexColor(CommonColors.purpleTheme),
-      );
+      return viewService.buildComponent('recommendComponent');
       break;
     case 'hot':
-      return Container(
-        color: HexColor(CommonColors.redTheme),
-      );
+      return viewService.buildComponent('hotComponent');
       break;
     case 'chaiBan':
       return Container(
@@ -53,7 +48,7 @@ Widget _buildListView(IndexListState state, Dispatch dispatch, ViewService viewS
   }
 }
 
-Widget _buildContentListView(IndexListState state, Dispatch dispatch, ViewService viewService) {
+Widget _buildContentListView(PicInsectListState state, Dispatch dispatch, ViewService viewService) {
   List list = state.list;
   return ListView.separated(
     itemCount: (list == null || list.isEmpty) ? 0 : list.length + 1,
@@ -79,7 +74,7 @@ Widget _buildContentListView(IndexListState state, Dispatch dispatch, ViewServic
   );
 }
 
-Widget _buildItemView(IndexListState state, ViewService viewService, Dispatch dispatch, Map map) {
+Widget _buildItemView(PicInsectListState state, ViewService viewService, Dispatch dispatch, Map map) {
   return GestureDetector(
     child: Stack(
       children: <Widget>[
@@ -119,3 +114,5 @@ Widget _buildItemView(IndexListState state, ViewService viewService, Dispatch di
     ),
   );
 }
+
+

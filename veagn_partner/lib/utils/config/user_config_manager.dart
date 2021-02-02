@@ -13,6 +13,6 @@ class UserConfigManager {
     return _instance;
   }
   /// 服务器地址
-  String baseUrl = 'http://v.juhe.cn';
+  String juHeBaseUrl = 'http://v.juhe.cn';
 }
 
