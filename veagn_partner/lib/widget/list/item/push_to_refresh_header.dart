@@ -23,8 +23,7 @@ class PullToRefreshHeader extends StatelessWidget {
     String text = '';
     if (info.mode == RefreshIndicatorMode.armed) {
       text = 'Release to refresh';
-    } else if (info.mode == RefreshIndicatorMode.refresh ||
-        info.mode == RefreshIndicatorMode.snap) {
+    } else if (info.mode == RefreshIndicatorMode.refresh || info.mode == RefreshIndicatorMode.snap) {
       text = 'Loading...';
     } else if (info.mode == RefreshIndicatorMode.done) {
       text = 'Refresh completed.';
@@ -45,8 +44,8 @@ class PullToRefreshHeader extends StatelessWidget {
     return Container(
       height: dragOffset,
       color: color ?? Colors.transparent,
-      //padding: EdgeInsets.only(top: dragOffset / 3),
-      //padding: EdgeInsets.only(bottom: 5.0),
+      padding: EdgeInsets.only(top: dragOffset / 3,bottom: 5.0),
+      // padding: EdgeInsets.only(bottom: 5.0),
       child: Stack(
         children: <Widget>[
           Positioned(
@@ -71,10 +70,8 @@ class PullToRefreshHeader extends StatelessWidget {
                       style: ts,
                     ),
                     Text(
-                      'Last updated:' +
-                          DateFormat('yyyy-MM-dd hh:mm').format(time),
-                      style:
-                          ts.copyWith(fontSize: ScreenUtil.instance.setSp(24)),
+                      'Last updated:' + DateFormat('yyyy-MM-dd hh:mm').format(time),
+                      style: ts.copyWith(fontSize: ScreenUtil.instance.setSp(24)),
                     )
                   ],
                 ),
@@ -104,17 +101,14 @@ class RefreshImage extends StatelessWidget {
         final double imageHeight = image.height.toDouble();
         final double imageWidth = image.width.toDouble();
         final Size size = rect.size;
-        final double y = (1 - min(top / (refreshHeight - hideHeight), 1)) *
-            imageHeight as double;
+        final double y = (1 - min(top / (refreshHeight - hideHeight), 1)) * imageHeight as double;
 
         canvas.drawImageRect(
             image,
             Rect.fromLTWH(0.0, y, imageWidth, imageHeight - y),
-            Rect.fromLTWH(rect.left, rect.top + y / imageHeight * size.height,
-                size.width, (imageHeight - y) / imageHeight * size.height),
+            Rect.fromLTWH(rect.left, rect.top + y / imageHeight * size.height, size.width, (imageHeight - y) / imageHeight * size.height),
             Paint()
-              ..colorFilter =
-                  const ColorFilter.mode(Color(0xFFea5504), BlendMode.srcIn)
+              ..colorFilter = const ColorFilter.mode(Color(0xFFea5504), BlendMode.srcIn)
               ..isAntiAlias = false
               ..filterQuality = FilterQuality.low);
 

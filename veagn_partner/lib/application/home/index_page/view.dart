@@ -26,10 +26,17 @@ Widget buildView(IndexState state, Dispatch dispatch, ViewService viewService) {
             labelStyle: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600),
             unselectedLabelStyle: const TextStyle(fontSize: 17.0),
             indicatorColor: HexColor(CommonColors.defaultColors),
+            indicatorPadding: EdgeInsets.only(left: 15, right: 15),
+            indicatorWeight: 3,
             tabs: state.tabTitles.map((Map<String, String> item) {
               return Container(
-                width: (screenWidth - 1) / 9,
-                child: Tab(text: item['title']),
+                width: 40,
+                height: 35,
+                child: Center(
+                  child: Text(item['title'], softWrap: false, overflow: TextOverflow.fade),
+                ),
+
+                // Tab(text: item['title']),
               );
             }).toList(),
           ),
@@ -58,4 +65,3 @@ Widget buildView(IndexState state, Dispatch dispatch, ViewService viewService) {
     ),
   );
 }
-

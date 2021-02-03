@@ -1,48 +1,32 @@
 import 'dart:async';
 import 'dart:math';
-import 'dart:ui';
+
 import 'package:extended_image/extended_image.dart';
 import 'package:extended_text/extended_text.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
-import 'package:flutter/material.dart' hide Image;
-import 'package:flutter/rendering.dart';
 import 'package:partner/widget/list/common/data/tu_chong_source.dart';
 import 'package:partner/widget/list/common/model/pic_swiper_item.dart';
 import 'package:partner/widget/list/common/text/my_extended_text_selection_controls.dart';
 import 'package:partner/widget/list/common/text/my_special_text_span_builder.dart';
 import 'package:partner/widget/list/common/utils/util.dart';
+import 'package:partner/widget/list/item/item_builder.dart';
+import 'package:partner/widget/list/item/pic_swiper.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:ff_annotation_route/ff_annotation_route.dart';
-import 'item_builder.dart';
 
-const String attachContent =
-    '''[love]Extended text help you to build rich text quickly. any special text you will have with extended text.It's my pleasure to invite you to join \$FlutterCandies\$ if you want to improve flutter .[love] if you meet any problem, please let me konw @zmtzawqlp .[sun_glasses]''';
+class PhotoGallery extends StatefulWidget {
+  const PhotoGallery(this.pics, this.index, this.tuChongItem);
 
-typedef DoubleClickAnimationListener = void Function();
-
-@FFRoute(
-  name: 'fluttercandies://picswiper',
-  routeName: 'PicSwiper',
-  showStatusBar: false,
-  pageRouteType: PageRouteType.transparent,
-  argumentImports: <String>['import \'common/data/tu_chong_source.dart\';', 'import \'common/model/pic_swiper_item.dart\';'],
-)
-class PicSwiper extends StatefulWidget {
-  const PicSwiper({
-    this.index,
-    this.pics,
-    this.tuChongItem,
-  });
-  final int index;
   final List<PicSwiperItem> pics;
+  final int index;
   final TuChongItem tuChongItem;
+
   @override
-  _PicSwiperState createState() => _PicSwiperState();
+  _PhotoGalleryState createState() => _PhotoGalleryState();
 }
 
-class _PicSwiperState extends State<PicSwiper> with TickerProviderStateMixin {
+class _PhotoGalleryState extends State<PhotoGallery> with TickerProviderStateMixin {
   final StreamController<int> rebuildIndex = StreamController<int>.broadcast();
   final StreamController<bool> rebuildSwiper = StreamController<bool>.broadcast();
   final StreamController<double> rebuildDetail = StreamController<double>.broadcast();
@@ -54,6 +38,9 @@ class _PicSwiperState extends State<PicSwiper> with TickerProviderStateMixin {
   DoubleClickAnimationListener _doubleClickAnimationListener;
   List<double> doubleTapScales = <double>[1.0, 2.0];
   GlobalKey<ExtendedImageSlidePageState> slidePagekey = GlobalKey<ExtendedImageSlidePageState>();
+  int currentIndex = 0;
+  int initialIndex; //初始index
+  int length;
   int _currentIndex = 0;
   bool _showSwiper = true;
   double _imageDetailY = 0;
@@ -90,15 +77,18 @@ class _PicSwiperState extends State<PicSwiper> with TickerProviderStateMixin {
     super.dispose();
   }
 
+  void onPageChanged(int index) {
+    setState(() {
+      currentIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     imageDRect = Offset.zero & size;
     Widget result = Material(
-
-        /// if you use ExtendedImageSlidePage and slideType =SlideType.onlyImage,
-        /// make sure your page is transparent background
-        color: Colors.transparent,
+        color: Colors.black,
         shadowColor: Colors.transparent,
         child: Stack(
           fit: StackFit.expand,
@@ -145,13 +135,9 @@ class _PicSwiperState extends State<PicSwiper> with TickerProviderStateMixin {
                         maxScale: max(initialScale, 5.0),
                         animationMaxScale: max(initialScale, 5.0),
                         initialAlignment: InitialAlignment.center,
-                        //you can cache gesture state even though page view page change.
-                        //remember call clearGestureDetailsCache() method at the right time.(for example,this page dispose)
                         cacheGesture: false);
                   },
                   onDoubleTap: (ExtendedImageGestureState state) {
-                    ///you can use define pointerDownPosition as you can,
-                    ///default value is double tap pointer down postion.
                     final Offset pointerDownPosition = state.pointerDownPosition;
                     final double begin = state.gestureDetails.totalScale;
                     double end;
@@ -284,9 +270,8 @@ class _PicSwiperState extends State<PicSwiper> with TickerProviderStateMixin {
                 if (d.data == null || !d.data) {
                   return Container();
                 }
-
                 return Positioned(
-                  top: 0.0,
+                  top: 50.0,
                   left: 0.0,
                   right: 0.0,
                   child: VeganSwpPlugin(widget.pics, _currentIndex, rebuildIndex),
@@ -402,68 +387,6 @@ class _PicSwiperState extends State<PicSwiper> with TickerProviderStateMixin {
   }
 }
 
-class VeganSwpPlugin extends StatelessWidget {
-  const VeganSwpPlugin(this.pics, this.index, this.reBuild,);
-  final List<PicSwiperItem> pics;
-  final int index;
-  final StreamController<int> reBuild;
-  @override
-  Widget build(BuildContext context) {
-    return StreamBuilder<int>(
-      builder: (BuildContext context, AsyncSnapshot<int> data) {
-        return DefaultTextStyle(
-          style: const TextStyle(color: Colors.white),
-          child: Container(
-            height: 50.0,
-            width: double.infinity,
-            color: Colors.grey.withOpacity(0.2),
-            child: Row(
-              children: <Widget>[
-                Container(
-                  width: 10.0,
-                ),
-                Text(
-                  '${data.data + 1}',
-                ),
-                Text(
-                  ' / ${pics.length}',
-                ),
-                const SizedBox(
-                  width: 10.0,
-                ),
-                Expanded(
-                    child: Text(pics[data.data].des ?? '',
-                        maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 16.0, color: Colors.white))),
-                const SizedBox(
-                  width: 10.0,
-                ),
-                if (!kIsWeb)
-                  GestureDetector(
-                    child: Container(
-                      padding: const EdgeInsets.only(right: 10.0),
-                      alignment: Alignment.center,
-                      child: const Text(
-                        'Save',
-                        style: TextStyle(fontSize: 16.0, color: Colors.white),
-                      ),
-                    ),
-                    onTap: () {
-                      saveNetworkImageToPhoto(pics[index].picUrl).then((bool done) {
-                        showToast(done ? 'save succeed' : 'save failed', position: const ToastPosition(align: Alignment.topCenter));
-                      });
-                    },
-                  ),
-              ],
-            ),
-          ),
-        );
-      },
-      initialData: index,
-      stream: reBuild.stream,
-    );
-  }
-}
-
 class ImageDetailInfo {
   ImageDetailInfo({
     @required this.imageDRect,
@@ -484,7 +407,6 @@ class ImageDetailInfo {
   double _maxImageDetailY;
   double get maxImageDetailY {
     try {
-      //
       return _maxImageDetailY ??= max(key.currentContext.size.height - (pageSize.height - imageBottom), 0.1);
     } catch (e) {
       //currentContext is not ready
@@ -505,7 +427,6 @@ class ImageDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String content = tuChongItem.content ?? (tuChongItem.excerpt ?? tuChongItem.title);
-    content += attachContent * 2;
     final Widget result = Container(
       // constraints: BoxConstraints(minHeight: 25.0),
       key: info.key,
@@ -521,13 +442,8 @@ class ImageDetail extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              buildTagsWidget(
-                tuChongItem,
-                maxNum: tuChongItem.tags.length,
-              ),
-              const SizedBox(
-                height: 15.0,
-              ),
+              buildTagsWidget(tuChongItem, maxNum: tuChongItem.tags.length),
+              const SizedBox(height: 15.0),
               ExtendedText(
                 content,
                 onSpecialTextTap: (dynamic parameter) {
@@ -544,9 +460,6 @@ class ImageDetail extends StatelessWidget {
                 overflowWidget: kIsWeb
                     ? null
                     : TextOverflowWidget(
-                        //maxHeight: double.infinity,
-                        //align: TextOverflowAlign.right,
-                        //fixedOffset: Offset.zero,
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
@@ -600,23 +513,23 @@ class ImageDetail extends StatelessWidget {
                 children: const <Widget>[
                   Icon(
                     Icons.star,
-                    color: Colors.yellow,
+                    color: Colors.yellowAccent,
                   ),
                   Icon(
                     Icons.star,
-                    color: Colors.yellow,
+                    color: Colors.yellowAccent,
                   ),
                   Icon(
                     Icons.star,
-                    color: Colors.yellow,
+                    color: Colors.yellowAccent,
                   ),
                   Icon(
                     Icons.star,
-                    color: Colors.yellow,
+                    color: Colors.yellowAccent,
                   ),
                   Icon(
                     Icons.star,
-                    color: Colors.yellow,
+                    color: Colors.yellowAccent,
                   ),
                 ],
               )),
@@ -637,9 +550,6 @@ class ImageDetail extends StatelessWidget {
     );
 
     return ExtendedTextSelectionPointerHandler(
-      //default behavior
-      // child: result,
-      //custom your behavior
       builder: (List<ExtendedTextSelectionState> states) {
         return GestureDetector(
           onTap: () {
@@ -669,25 +579,55 @@ class ImageDetail extends StatelessWidget {
   }
 }
 
-class FloatText extends StatelessWidget {
-  const FloatText(this.text);
-  final String text;
+class VeganSwpPlugin extends StatelessWidget {
+  const VeganSwpPlugin(
+    this.pics,
+    this.index,
+    this.reBuild,
+  );
+  final List<PicSwiperItem> pics;
+  final int index;
+  final StreamController<int> reBuild;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(3.0),
-      decoration: BoxDecoration(
-        color: Colors.pinkAccent.withOpacity(0.6),
-        border: Border.all(color: Colors.grey.withOpacity(0.4), width: 1.0),
-        borderRadius: const BorderRadius.all(
-          Radius.circular(5.0),
-        ),
-      ),
-      child: Text(
-        text,
-        textAlign: TextAlign.center,
-        style: const TextStyle(color: Colors.white),
-      ),
+    return StreamBuilder<int>(
+      builder: (BuildContext context, AsyncSnapshot<int> data) {
+        return DefaultTextStyle(
+          style: const TextStyle(color: Colors.white),
+          child: Container(
+            height: 50.0,
+            width: double.infinity,
+            color: Colors.grey.withOpacity(0.2),
+            child: Row(
+              children: <Widget>[
+                Container(width: 10.0),
+                Text('${data.data + 1}'),
+                Text(' / ${pics.length}'),
+                const SizedBox(width: 10.0),
+                Expanded(
+                    child: Text(pics[data.data].des ?? '',
+                        maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 16.0, color: Colors.white))),
+                const SizedBox(width: 10.0),
+                if (!kIsWeb)
+                  GestureDetector(
+                    child: Container(
+                      padding: const EdgeInsets.only(right: 10.0),
+                      alignment: Alignment.center,
+                      child: const Text('Save', style: TextStyle(fontSize: 16.0, color: Colors.white)),
+                    ),
+                    onTap: () {
+                      saveNetworkImageToPhoto(pics[index].picUrl).then((bool done) {
+                        showToast(done ? 'save succeed' : 'save failed', position: const ToastPosition(align: Alignment.topCenter));
+                      });
+                    },
+                  ),
+              ],
+            ),
+          ),
+        );
+      },
+      initialData: index,
+      stream: reBuild.stream,
     );
   }
 }

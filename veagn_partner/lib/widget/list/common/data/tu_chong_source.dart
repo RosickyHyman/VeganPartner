@@ -209,7 +209,7 @@ class TuChongItem {
         if (item != null) {
           tryCatch(() {
             tags.add(asT<String>(item));
-            tagColors.add(Color.fromARGB(255, Random.secure().nextInt(255), Random.secure().nextInt(255), Random.secure().nextInt(255)));
+            tagColors.add(Color.fromARGB(200, Random.secure().nextInt(255), Random.secure().nextInt(255), Random.secure().nextInt(255)));
           });
         }
         if (tags.length == maxNum) {

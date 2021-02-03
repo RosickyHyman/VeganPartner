@@ -15,16 +15,12 @@ Effect<HotState> buildEffect() {
 }
 
 void _init(Action action, Context<HotState> ctx) {
-  ctx.state.listSourceRepository = PicInsectRepository();
-  ctx.state.dateTimeNow =  DateTime.now();
 
-  ctx.state.attachContent =
-  '[love]Extended text help you to build rich text quickly. any special text you will have with extended text.It\'s my pleasure to invite you to join \$FlutterCandies\$ if you want to improve flutter .[love] if you meet any problem, please let me konw @zmtzawqlp .[sun_glasses]';
-  ctx.state.textSelectionControls =  VeganExtendedMaterialTextSelectionControls();
+  ctx.state.waterfallsSource = PicInsectRepository();
 
   ctx.dispatch(HotActionCreator.onAction());
 }
 
 void _dispose(Action action, Context<HotState> ctx) {
-  ctx.state.listSourceRepository.dispose();
+  ctx.state.waterfallsSource.dispose();
 }

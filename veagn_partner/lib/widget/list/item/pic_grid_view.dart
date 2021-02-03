@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:partner/widget/list/common/data/tu_chong_source.dart';
 import 'package:partner/widget/list/common/utils/screen_util.dart';
@@ -45,10 +44,7 @@ class PicGridView extends StatelessWidget {
         width: totalWidth,
         child: GridView.builder(
           shrinkWrap: true,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: rowCount,
-              crossAxisSpacing: 2.0,
-              mainAxisSpacing: 2.0),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: rowCount, crossAxisSpacing: 2.0, mainAxisSpacing: 2.0),
           itemBuilder: (BuildContext s, int index) {
             return CropImage(
               index: index,
@@ -57,8 +53,7 @@ class PicGridView extends StatelessWidget {
             );
           },
           physics: const NeverScrollableScrollPhysics(),
-          itemCount:
-              tuChongItem.images.length.clamp(1, maxPicGridViewCount) as int,
+          itemCount: tuChongItem.images.length.clamp(1, maxPicGridViewCount) as int,
           padding: const EdgeInsets.all(0.0),
         ),
       );

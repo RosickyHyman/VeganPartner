@@ -15,11 +15,17 @@ Effect<RecommendState> buildEffect() {
 }
 
 void _init(Action action, Context<RecommendState> ctx) {
-  ctx.state.waterfallsSource = PicInsectRepository();
+
+  ctx.state.listSourceRepository = PicInsectRepository();
+  ctx.state.dateTimeNow =  DateTime.now();
+
+  ctx.state.attachContent =
+  '[love]Extended text help you to build rich text quickly. any special text you will have with extended text.It\'s my pleasure to invite you to join \$FlutterCandies\$ if you want to improve flutter .[love] if you meet any problem, please let me konw @zmtzawqlp .[sun_glasses]';
+  ctx.state.textSelectionControls =  VeganExtendedMaterialTextSelectionControls();
 
   ctx.dispatch(RecommendActionCreator.onAction());
 }
 
 void _dispose(Action action, Context<RecommendState> ctx) {
-  ctx.state.waterfallsSource?.dispose();
+  ctx.state.listSourceRepository?.dispose();
 }

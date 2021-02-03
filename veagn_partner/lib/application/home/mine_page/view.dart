@@ -154,10 +154,12 @@ Widget _buildTopView(MineState state, Dispatch dispatch, ViewService viewService
         ),
       ),
       Positioned(
-        left: 30.0,
-        bottom: 10.0,
+        right: 80.0,
+        bottom: 0.0,
         child: Container(
-          child: Image.asset('image/home/mine/sword.png', fit: BoxFit.scaleDown),
+          width: 80,
+          height: 60,
+          child: Image.asset('images/home/mine/sword.png', fit: BoxFit.scaleDown),
         ),
       ),
     ],

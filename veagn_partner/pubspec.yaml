@@ -20,34 +20,32 @@ dependencies:
   flutter:
     sdk: flutter
 
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
+  cached_network_image: ^2.5.0
   cupertino_icons: ^0.1.2
-  fish_redux: ^0.3.1
   dio: ^3.0.10
-  flutter_svg: ^0.19.0
-  flutter_svprogresshud: 0.0.4
-  shared_preferences: ^0.5.12+4
-
-  loading_more_list: ^3.0.0
   extended_text: ^4.0.0
-  wechat_assets_picker: ^4.1.0+4
-  image: ^2.1.4
-  image_editor: ^0.1.2
-  isolate: ^2.0.2
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  js: ^0.6.1+1
-  http_client_helper: any
-  pull_to_refresh_notification: any
-  like_button: any
-  photo_manager: 0.5.7
-  url_launcher: 5.3.0
-  intl: any
-  oktoast: ^2.1.4
-  extended_sliver: ^1.0.1
   extended_image_library: ^0.3.1
   extended_image: ^1.5.0
+  extended_sliver: ^1.0.1
+  fish_redux: ^0.3.1
+  flutter_svg: ^0.19.0
+  flutter_svprogresshud: 0.0.4
+  flutter_swiper: ^1.1.6
+  http_client_helper: any
+  image: ^2.1.4
+  image_editor: ^0.1.2
+  intl: any
+  isolate: ^2.0.2
+  js: ^0.6.1+1
+  loading_more_list: ^3.0.0
+  like_button: any
+  oktoast: ^2.1.4
+  photo_manager: 0.5.7
+  photo_view: ^0.10.3
+  pull_to_refresh_notification: any
+  shared_preferences: ^0.5.12+4
+  url_launcher: 5.3.0
+  wechat_assets_picker: ^4.1.0+4
 
 
 dev_dependencies:

@@ -49,16 +49,19 @@ class PicInsectRepository extends LoadingMoreBase<TuChongItem> {
       url = 'https://api.tuchong.com/feed-app?post_id=$lastPostId&page=$_pageIndex&type=loadmore';
     }
     bool isSuccess = false;
+
     try {
       //to show loading more clearly, in your app,remove this
       //await Future.delayed(const Duration(milliseconds: 500));
       List<TuChongItem> feedList;
-      if (!kIsWeb) {
+      // if (!kIsWeb) {
         final Response result = await HttpClientHelper.get(url);
         feedList = TuChongSource.fromJson(json.decode(result.body) as Map<String, dynamic>).feedList;
-      } else {
-        feedList = mockSource.feedList.getRange(length, length + 20).toList();
-      }
+
+        print(url);
+      // } else {
+      //   feedList = mockSource.feedList.getRange(length, length + 20).toList();
+      // }
 
       if (_pageIndex == 1) {
         clear();

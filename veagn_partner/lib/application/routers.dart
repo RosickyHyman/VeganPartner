@@ -2,19 +2,20 @@ import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart' hide Action, Page;
 
 
+import 'package:partner/application/splash/page.dart';
+import 'package:partner/application/home/page.dart';
+
 import 'package:partner/application/home/index_page/page.dart';
 import 'package:partner/application/home/message_page/page.dart';
-
 import 'package:partner/application/home/mine_page/page.dart';
 import 'package:partner/application/home/mine_page/change_skin/page.dart';
 
-import 'package:partner/application/splash/page.dart';
+import 'package:partner/partner/pic_insect/pic_insect_gallery/page.dart';
 import 'package:partner/partner/pic_insect/pic_insect_list_page/page.dart';
 
 
 import 'global_store/state.dart';
 import 'global_store/store.dart';
-import 'home/page.dart';
 
 
 
@@ -35,9 +36,10 @@ class Routers {
       'index_page': IndexPage(),
       'msg_page': MessagePage(),
       'mine_page': MinePage(),
+      'change_skin_page': ChangeSkinPage(),
 
       'index_list_page': PicInsectListPage(),
-      'change_skin_page': ChangeSkinPage(),
+      'pic_insect_gallery_page': PicInsectGalleryPage(),
 
 
 

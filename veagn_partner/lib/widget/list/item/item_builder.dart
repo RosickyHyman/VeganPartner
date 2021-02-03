@@ -2,8 +2,11 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
+import 'package:partner/utils/common/common_colors.dart';
+import 'package:partner/utils/other/hex_color.dart';
 import 'package:partner/widget/list/common/data/tu_chong_repository.dart';
 import 'package:partner/widget/list/common/data/tu_chong_source.dart';
+import 'package:partner/widget/list/common/model/pic_swiper_item.dart';
 import 'package:partner/widget/list/common/utils/screen_util.dart';
 
 Widget itemBuilder(BuildContext context, TuChongItem item, int index) {
@@ -101,19 +104,17 @@ Widget buildWaterfallFlowItem(BuildContext c, TuChongItem item, int index, {bool
     children: <Widget>[
       ExtendedImage.network(
         item.imageUrl,
+        fit: BoxFit.scaleDown,
         shape: BoxShape.rectangle,
         clearMemoryCacheWhenDispose: true,
-        border: Border.all(color: Colors.grey.withOpacity(0.4), width: 1.0),
-        borderRadius: const BorderRadius.all(
-          Radius.circular(10.0),
-        ),
+        borderRadius: const BorderRadius.all(Radius.circular(5.0)),
         loadStateChanged: (ExtendedImageState value) {
           if (value.extendedImageLoadState == LoadState.loading) {
             Widget loadingWidget = Container(
               alignment: Alignment.center,
               color: Colors.grey.withOpacity(0.8),
               child: CircularProgressIndicator(
-                strokeWidth: 2.0,
+                strokeWidth: 4.0,
                 valueColor: AlwaysStoppedAnimation<Color>(Theme.of(c).primaryColor),
               ),
             );
@@ -132,21 +133,23 @@ Widget buildWaterfallFlowItem(BuildContext c, TuChongItem item, int index, {bool
         },
       ),
       Positioned(
-        top: 5.0,
-        right: 5.0,
+        top: 10.0,
+        right: 10.0,
         child: Container(
-          padding: const EdgeInsets.all(3.0),
+          width: 20.0,
+          height: 20.0,
           decoration: BoxDecoration(
             color: Colors.grey.withOpacity(0.6),
-            border: Border.all(color: Colors.grey.withOpacity(0.4), width: 1.0),
             borderRadius: const BorderRadius.all(
-              Radius.circular(5.0),
+              Radius.circular(5.0)
             ),
           ),
-          child: Text(
-            '${index + 1}',
-            textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: fontSize, color: Colors.white),
+          child: Center(
+            child: Text(
+              '${item.images.map<PicSwiperItem>((ImageItem f) => PicSwiperItem(picUrl: f.imageUrl, des: f.title)).toList().length}',
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontSize: fontSize, color: Colors.white),
+            ),
           ),
         ),
       )
@@ -164,27 +167,46 @@ Widget buildWaterfallFlowItem(BuildContext c, TuChongItem item, int index, {bool
     );
   }
 
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: <Widget>[
-      image,
-      const SizedBox(
-        height: 5.0,
+  return InkWell(
+    child: Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: const BorderRadius.all(Radius.circular(10.0)),
       ),
-      buildTagsWidget(item),
-      const SizedBox(
-        height: 5.0,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          image,
+          const SizedBox(height: 5.0),
+          Container(
+            margin: const EdgeInsets.only(left: 5.0, right: 5.0, bottom: 5.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                buildTagsWidget(item),
+                const SizedBox(height: 5.0),
+                buildBottomWidget(item),
+              ],
+            ),
+          ),
+        ],
       ),
-      buildBottomWidget(item),
-    ],
+    ),
+    onTap: () {
+      Navigator.pushNamed(c, 'pic_insect_gallery_page', arguments: <String, dynamic>{
+        'index': 0,
+        'pics': item.images.map<PicSwiperItem>((ImageItem f) => PicSwiperItem(picUrl: f.imageUrl, des: f.title)).toList(),
+        'tuChongItem': item
+      });
+    },
   );
 }
 
 Widget buildTagsWidget(
   TuChongItem item, {
-  int maxNum = 6,
+  int maxNum = 4,
 }) {
-  const double fontSize = 12.0;
+  const double fontSize = 10.0;
   return Wrap(
       runSpacing: 5.0,
       spacing: 5.0,
@@ -210,6 +232,7 @@ Widget buildTagsWidget(
 
 Widget buildBottomWidget(TuChongItem item, {bool showAvatar = true}) {
   const double fontSize = 12.0;
+  String title = item.site.name ?? '';
   return Row(
     children: <Widget>[
       if (showAvatar)
@@ -230,51 +253,48 @@ Widget buildBottomWidget(TuChongItem item, {bool showAvatar = true}) {
           },
         ),
       Expanded(
-        child: Container(),
-      ),
-      Row(
-        children: <Widget>[
-          const Icon(
-            Icons.comment,
-            color: Colors.amberAccent,
-            size: 18.0,
+        child: Container(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Row(
+                children: <Widget>[
+                  const Icon(Icons.comment, color: Colors.amberAccent, size: 18.0),
+                  const SizedBox(
+                    width: 3.0,
+                  ),
+                  Text(item.comments.toString(), style: const TextStyle(color: Colors.grey, fontSize: fontSize))
+                ],
+              ),
+              const SizedBox(width: 3.0),
+              LikeButton(
+                size: 16.0,
+                isLiked: item.isFavorite,
+                likeCount: item.favorites,
+                countBuilder: (int count, bool isLiked, String text) {
+                  final ColorSwatch<int> color = isLiked ? Colors.pinkAccent : Colors.grey;
+                  Widget result;
+                  if (count == 0) {
+                    result = Text(
+                      'love',
+                      style: TextStyle(color: color, fontSize: fontSize),
+                    );
+                  } else {
+                    result = Text(
+                      count >= 1000 ? (count / 1000.0).toStringAsFixed(1) + 'k' : text,
+                      style: TextStyle(color: color, fontSize: fontSize),
+                    );
+                  }
+                  return result;
+                },
+                likeCountAnimationType: item.favorites < 1000 ? LikeCountAnimationType.part : LikeCountAnimationType.none,
+                onTap: (bool isLiked) {
+                  return onLikeButtonTap(isLiked, item);
+                },
+              ),
+            ],
           ),
-          const SizedBox(
-            width: 3.0,
-          ),
-          Text(
-            item.comments.toString(),
-            style: const TextStyle(color: Colors.black, fontSize: fontSize),
-          )
-        ],
-      ),
-      const SizedBox(
-        width: 3.0,
-      ),
-      LikeButton(
-        size: 18.0,
-        isLiked: item.isFavorite,
-        likeCount: item.favorites,
-        countBuilder: (int count, bool isLiked, String text) {
-          final ColorSwatch<int> color = isLiked ? Colors.pinkAccent : Colors.grey;
-          Widget result;
-          if (count == 0) {
-            result = Text(
-              'love',
-              style: TextStyle(color: color, fontSize: fontSize),
-            );
-          } else {
-            result = Text(
-              count >= 1000 ? (count / 1000.0).toStringAsFixed(1) + 'k' : text,
-              style: TextStyle(color: color, fontSize: fontSize),
-            );
-          }
-          return result;
-        },
-        likeCountAnimationType: item.favorites < 1000 ? LikeCountAnimationType.part : LikeCountAnimationType.none,
-        onTap: (bool isLiked) {
-          return onLikeButtonTap(isLiked, item);
-        },
+        ),
       ),
     ],
   );

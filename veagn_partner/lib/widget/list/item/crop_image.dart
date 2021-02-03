@@ -65,8 +65,7 @@ class CropImage extends StatelessWidget {
             alignment: Alignment.center,
             child: CircularProgressIndicator(
               strokeWidth: 2.0,
-              valueColor:
-                  AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
+              valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
             ),
           );
           break;
@@ -82,9 +81,7 @@ class CropImage extends StatelessWidget {
           ///please return null or state.completedWidget
           //return null;
           //return state.completedWidget;
-          widget = Hero(
-              tag: imageItem.imageUrl,
-              child: buildImage(state.extendedImageInfo.image, num300, num400));
+          widget = Hero(tag: imageItem.imageUrl, child: buildImage(state.extendedImageInfo.image, num300, num400));
 
           break;
         case LoadState.failed:
@@ -132,15 +129,11 @@ class CropImage extends StatelessWidget {
       widget = GestureDetector(
         child: widget,
         onTap: () {
-          Navigator.pushNamed(context, 'fluttercandies://picswiper',
-              arguments: <String, dynamic>{
-                'index': index,
-                'pics': tuChongItem.images
-                    .map<PicSwiperItem>((ImageItem f) =>
-                        PicSwiperItem(picUrl: f.imageUrl, des: f.title))
-                    .toList(),
-                'tuChongItem': tuChongItem,
-              });
+          Navigator.pushNamed(context, 'pic_insect_gallery_page', arguments: <String, dynamic>{
+            'index': index,
+            'pics': tuChongItem.images.map<PicSwiperItem>((ImageItem f) => PicSwiperItem(picUrl: f.imageUrl, des: f.title)).toList(),
+            'tuChongItem': tuChongItem,
+          });
         },
       );
 
@@ -158,8 +151,7 @@ class CropImage extends StatelessWidget {
           width: num300,
           height: num400,
           fit: BoxFit.fill,
-          sourceRect: Rect.fromLTWH(
-              0.0, 0.0, image.width.toDouble(), 4 * image.width / 3));
+          sourceRect: Rect.fromLTWH(0.0, 0.0, image.width.toDouble(), 4 * image.width / 3));
       if (n >= 4) {
         imageWidget = Container(
           width: num300,
@@ -207,8 +199,7 @@ class CropImage extends StatelessWidget {
         width: num400,
         height: num300,
         fit: BoxFit.fill,
-        sourceRect: Rect.fromLTWH(
-            (image.width - width) / 2.0, 0.0, width, image.height.toDouble()),
+        sourceRect: Rect.fromLTWH((image.width - width) / 2.0, 0.0, width, image.height.toDouble()),
       );
 
       if (n <= 1 / 4) {
