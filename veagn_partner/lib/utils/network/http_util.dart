@@ -31,7 +31,7 @@ class HttpUtil {
 
   static void _configDio() {
     _instance = Dio();
-    _instance.options.baseUrl = UserConfigManager.instance.juHeBaseUrl;
+    _instance.options.baseUrl = UserConfigManager.instance.picInsectUrl;
     _instance.options.connectTimeout = GlobalConfig.connectTimeout;
     _instance.options.receiveTimeout = GlobalConfig.receiveTimeout;
   }
@@ -118,9 +118,26 @@ class HttpUtil {
         handleResponse(response);
       }
 
+      print('==response==${response.toString()}');
+      // if (response?.statusCode == 200) {
+      //   if (response.data is Map<dynamic, dynamic>) {
+      //     if (response.data['error_code'] == 0 || response.data['error_code'] == 200) {
+      //       if (success != null) {
+      //         try {
+      //           success(response.data);
+      //         } catch (e) {
+      //           log(e);
+      //           return false;
+      //         }
+      //       }
+      //       return true;
+      //     }
+      //   }
+      // }
+
       if (response?.statusCode == 200) {
         if (response.data is Map<dynamic, dynamic>) {
-          if (response.data['error_code'] == 0 || response.data['error_code'] == 200) {
+          if (response.data['result'] == 'SUCCESS') {
             if (success != null) {
               try {
                 success(response.data);

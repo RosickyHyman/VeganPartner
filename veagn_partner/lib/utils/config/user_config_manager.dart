@@ -14,5 +14,8 @@ class UserConfigManager {
   }
   /// 服务器地址
   String juHeBaseUrl = 'http://v.juhe.cn';
+
+  ///图虫地址
+  String picInsectUrl = 'https://api.tuchong.com';
 }
 

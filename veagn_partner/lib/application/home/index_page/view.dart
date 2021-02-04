@@ -56,7 +56,7 @@ Widget buildView(IndexState state, Dispatch dispatch, ViewService viewService) {
               itemBuilder: (BuildContext context, int index) {
                 state.pageIndex = index;
                 final Map map = state.tabTitles[index];
-                return Routers.router.buildPage('index_list_page', map);
+                return _buildListView(state, dispatch, viewService, map);
               },
             ),
           ),
@@ -64,4 +64,42 @@ Widget buildView(IndexState state, Dispatch dispatch, ViewService viewService) {
       ],
     ),
   );
+}
+
+
+Widget _buildListView(IndexState state, Dispatch dispatch, ViewService viewService, Map map) {
+  switch (map['type']) {
+    case 'attention':
+      return Routers.router.buildPage('attention_page', map);
+      break;
+    case 'recommend':
+      return Routers.router.buildPage('recommend_page', map);
+      break;
+    case 'hot':
+      return Routers.router.buildPage('hot_page', map);
+      break;
+    case 'video':
+      return Routers.router.buildPage('video_page', map);
+      break;
+    case 'chaiBan':
+      return Container(
+        color: HexColor(CommonColors.greenTheme),
+      );
+      break;
+    case 'anti':
+      return Container(
+        color: HexColor(CommonColors.pinkTheme),
+      );
+      break;
+    case 'wellOff':
+      return Container(
+        color: HexColor(CommonColors.yellowTheme),
+      );
+      break;
+    default:
+      return Container(
+        color: HexColor(CommonColors.defaultColors),
+      );
+      break;
+  }
 }

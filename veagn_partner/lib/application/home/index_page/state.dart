@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 
 class IndexState implements Cloneable<IndexState> {
   var tabTitles = [
-    {'type': 'live', 'title': '直播'},
+    {'type': 'attention', 'title': '关注'},
     {'type': 'recommend', 'title': '推荐'},
     {'type': 'hot', 'title': '热门'},
+    {'type': 'video', 'title': '视频'},
     {'type': 'chaiBan', 'title': '追番'},
-    {'type': 'film', 'title': '影视'},
     {'type': 'anti', 'title': '抗疫'},
     {'type': 'wellOff', 'title': '小康'},
   ];

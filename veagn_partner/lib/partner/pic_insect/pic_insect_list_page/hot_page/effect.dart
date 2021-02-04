@@ -16,11 +16,11 @@ Effect<HotState> buildEffect() {
 
 void _init(Action action, Context<HotState> ctx) {
 
-  ctx.state.waterfallsSource = PicInsectRepository();
+  ctx.state.listSourceRepository = PicInsectRepository();
 
   ctx.dispatch(HotActionCreator.onAction());
 }
 
 void _dispose(Action action, Context<HotState> ctx) {
-  ctx.state.waterfallsSource.dispose();
+  ctx.state.listSourceRepository.dispose();
 }

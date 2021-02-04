@@ -2,102 +2,90 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
-import 'package:partner/utils/common/common_colors.dart';
-import 'package:partner/utils/other/hex_color.dart';
 import 'package:partner/widget/list/common/data/tu_chong_repository.dart';
 import 'package:partner/widget/list/common/data/tu_chong_source.dart';
 import 'package:partner/widget/list/common/model/pic_swiper_item.dart';
 import 'package:partner/widget/list/common/utils/screen_util.dart';
+import 'package:partner/widget/list/item/pic_grid_view.dart';
 
-Widget itemBuilder(BuildContext context, TuChongItem item, int index) {
-  return Container(
-    height: ScreenUtil.instance.setWidth(kIsWeb ? 400.0 : 200.0),
-    child: Stack(
-      children: <Widget>[
-        Positioned(
-          child: kIsWeb
-              ? ListView.builder(
-                  itemBuilder: (BuildContext c, int index) {
-                    return ExtendedImage.network(
-                      item.images[index].imageUrl,
-                      fit: BoxFit.cover,
-                      width: ScreenUtil.instance.setWidth(kIsWeb ? 400.0 : double.infinity),
-                      height: ScreenUtil.instance.setWidth(kIsWeb ? 400.0 : 200.0),
-                      clearMemoryCacheWhenDispose: true,
-                    );
-                  },
-                  scrollDirection: Axis.horizontal,
-                  itemCount: item.images.length,
-                )
-              : ExtendedImage.network(
-                  item.imageUrl,
-                  fit: BoxFit.cover,
-                  width: double.infinity,
-                  //height: 200.0,
-                  height: double.infinity,
-                  clearMemoryCacheWhenDispose: true,
-                ),
-        ),
-        Positioned(
-          left: 0.0,
-          right: 0.0,
-          bottom: 0.0,
-          child: Container(
-            padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-            height: 40.0,
-            color: Colors.grey.withOpacity(0.5),
-            alignment: Alignment.center,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    const Icon(
-                      Icons.comment,
-                      color: Colors.amberAccent,
-                    ),
-                    Text(
-                      item.comments.toString(),
-                      style: const TextStyle(color: Colors.white),
-                    )
-                  ],
-                ),
-                LikeButton(
-                  size: 20.0,
-                  isLiked: item.isFavorite,
-                  likeCount: item.favorites,
-                  countBuilder: (int count, bool isLiked, String text) {
-                    final ColorSwatch<int> color = isLiked ? Colors.pinkAccent : Colors.grey;
-                    Widget result;
-                    if (count == 0) {
-                      result = Text(
-                        'love',
-                        style: TextStyle(color: color),
+Widget buildGridItem(BuildContext context, TuChongItem item, int index) {
+  return InkWell(
+    child: Container(
+      height: ScreenUtil.instance.setWidth(kIsWeb ? 400.0 : 200.0),
+      child: Stack(
+        children: <Widget>[
+          Positioned(
+            child: kIsWeb
+                ? ListView.builder(
+                    itemBuilder: (BuildContext c, int index) {
+                      return ExtendedImage.network(
+                        item.images[index].imageUrl,
+                        fit: BoxFit.cover,
+                        width: ScreenUtil.instance.setWidth(kIsWeb ? 400.0 : double.infinity),
+                        height: ScreenUtil.instance.setWidth(kIsWeb ? 400.0 : 200.0),
+                        clearMemoryCacheWhenDispose: true,
                       );
-                    } else {
-                      result = Text(
-                        count >= 1000 ? (count / 1000.0).toStringAsFixed(1) + 'k' : text,
-                        style: TextStyle(color: color),
-                      );
-                    }
-                    return result;
-                  },
-                  likeCountAnimationType: item.favorites < 1000 ? LikeCountAnimationType.part : LikeCountAnimationType.none,
-                  onTap: (bool isLiked) {
-                    return onLikeButtonTap(isLiked, item);
-                  },
-                ),
-              ],
-            ),
+                    },
+                    scrollDirection: Axis.horizontal,
+                    itemCount: item.images.length,
+                  )
+                : ExtendedImage.network(
+                    item.imageUrl,
+                    fit: BoxFit.cover,
+                    width: double.infinity,
+                    //height: 200.0,
+                    height: double.infinity,
+                    clearMemoryCacheWhenDispose: true,
+                  ),
           ),
-        )
-      ],
+          Positioned(
+            left: 0.0,
+            right: 0.0,
+            bottom: 0.0,
+            child: Container(
+              padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+              height: 25.0,
+              color: Colors.grey.withOpacity(0.5),
+              alignment: Alignment.center,
+              child: buildBottomWidget(item, showAvatar: false),
+            ),
+          )
+        ],
+      ),
     ),
+    onTap: () {
+      Navigator.pushNamed(context, 'pic_insect_gallery_page', arguments: <String, dynamic>{
+        'index': 0,
+        'pics': item.images.map<PicSwiperItem>((ImageItem f) => PicSwiperItem(picUrl: f.imageUrl, des: f.title)).toList(),
+        'tuChongItem': item
+      });
+    },
   );
 }
 
-Widget buildWaterfallFlowItem(BuildContext c, TuChongItem item, int index, {bool knowSized = true}) {
+Widget buildLandSpaceItem(BuildContext context, TuChongItem item, int index) {
+  bool isMutPic = item.content == '';
+  return InkWell(
+    child: Container(
+      child: Column(
+        children: [
+          PicGridView(
+            tuChongItem: item,
+          ),
+        ],
+      ),
+    ),
+    onTap: () {
+      Navigator.pushNamed(context, 'pic_insect_gallery_page', arguments: <String, dynamic>{
+        'index': 0,
+        'pics': item.images.map<PicSwiperItem>((ImageItem f) => PicSwiperItem(picUrl: f.imageUrl, des: f.title)).toList(),
+        'tuChongItem': item
+      });
+    },
+  );
+}
+
+Widget buildWaterfallFlowItem(BuildContext context, TuChongItem item, int index, {bool knowSized = true}) {
   const double fontSize = 12.0;
 
   Widget image = Stack(
@@ -113,17 +101,11 @@ Widget buildWaterfallFlowItem(BuildContext c, TuChongItem item, int index, {bool
             Widget loadingWidget = Container(
               alignment: Alignment.center,
               color: Colors.grey.withOpacity(0.8),
-              child: CircularProgressIndicator(
-                strokeWidth: 4.0,
-                valueColor: AlwaysStoppedAnimation<Color>(Theme.of(c).primaryColor),
-              ),
+              child: CircularProgressIndicator(strokeWidth: 4.0, valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor)),
             );
             if (!knowSized) {
               //todo: not work in web
-              loadingWidget = AspectRatio(
-                aspectRatio: 1.0,
-                child: loadingWidget,
-              );
+              loadingWidget = AspectRatio(aspectRatio: 1.0, child: loadingWidget);
             }
             return loadingWidget;
           } else if (value.extendedImageLoadState == LoadState.completed) {
@@ -140,9 +122,7 @@ Widget buildWaterfallFlowItem(BuildContext c, TuChongItem item, int index, {bool
           height: 20.0,
           decoration: BoxDecoration(
             color: Colors.grey.withOpacity(0.6),
-            borderRadius: const BorderRadius.all(
-              Radius.circular(5.0)
-            ),
+            borderRadius: const BorderRadius.all(Radius.circular(5.0)),
           ),
           child: Center(
             child: Text(
@@ -156,15 +136,9 @@ Widget buildWaterfallFlowItem(BuildContext c, TuChongItem item, int index, {bool
     ],
   );
   if (knowSized) {
-    image = AspectRatio(
-      aspectRatio: item.imageSize.width / item.imageSize.height,
-      child: image,
-    );
+    image = AspectRatio(aspectRatio: item.imageSize.width / item.imageSize.height, child: image);
   } else if (item.imageRawSize != null) {
-    image = AspectRatio(
-      aspectRatio: item.imageRawSize.width / item.imageRawSize.height,
-      child: image,
-    );
+    image = AspectRatio(aspectRatio: item.imageRawSize.width / item.imageRawSize.height, child: image);
   }
 
   return InkWell(
@@ -193,7 +167,7 @@ Widget buildWaterfallFlowItem(BuildContext c, TuChongItem item, int index, {bool
       ),
     ),
     onTap: () {
-      Navigator.pushNamed(c, 'pic_insect_gallery_page', arguments: <String, dynamic>{
+      Navigator.pushNamed(context, 'pic_insect_gallery_page', arguments: <String, dynamic>{
         'index': 0,
         'pics': item.images.map<PicSwiperItem>((ImageItem f) => PicSwiperItem(picUrl: f.imageUrl, des: f.title)).toList(),
         'tuChongItem': item
@@ -230,7 +204,7 @@ Widget buildTagsWidget(
       }).toList());
 }
 
-Widget buildBottomWidget(TuChongItem item, {bool showAvatar = true}) {
+Widget buildBottomWidget(TuChongItem item, {bool showAvatar = true, bool showName= false}) {
   const double fontSize = 12.0;
   String title = item.site.name ?? '';
   return Row(

@@ -1,7 +1,6 @@
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart' hide Action, Page;
 
-
 import 'package:partner/application/splash/page.dart';
 import 'package:partner/application/home/page.dart';
 
@@ -11,14 +10,13 @@ import 'package:partner/application/home/mine_page/page.dart';
 import 'package:partner/application/home/mine_page/change_skin/page.dart';
 
 import 'package:partner/partner/pic_insect/pic_insect_gallery/page.dart';
-import 'package:partner/partner/pic_insect/pic_insect_list_page/page.dart';
-
+import 'package:partner/partner/pic_insect/pic_insect_list_page/attention_page/page.dart';
+import 'package:partner/partner/pic_insect/pic_insect_list_page/hot_page/page.dart';
+import 'package:partner/partner/pic_insect/pic_insect_list_page/recommend_page/page.dart';
+import 'package:partner/partner/pic_insect/pic_insect_list_page/video_page/page.dart';
 
 import 'global_store/state.dart';
 import 'global_store/store.dart';
-
-
-
 
 class Routers {
   static final navigatorKey = GlobalKey<NavigatorState>();
@@ -31,25 +29,19 @@ class Routers {
   static final AbstractRoutes router = PageRoutes(
     pages: <String, Page<Object, dynamic>>{
       'home_page': HomePage(),
-'splash_page':SplashPage(),
+      'splash_page': SplashPage(),
+
       /// home
       'index_page': IndexPage(),
       'msg_page': MessagePage(),
       'mine_page': MinePage(),
       'change_skin_page': ChangeSkinPage(),
 
-      'index_list_page': PicInsectListPage(),
       'pic_insect_gallery_page': PicInsectGalleryPage(),
-
-
-
-
-
-
-
-
-
-
+      'attention_page': AttentionPage(),
+      'recommend_page': RecommendPage(),
+      'hot_page': HotPage(),
+      'video_page': VideoPage(),
     },
     visitor: (String path, Page<Object, dynamic> page) {
       /// 只有特定的范围的 Page 才需要建立和 AppStore 的连接关系
@@ -113,4 +105,3 @@ EffectMiddleware<T> _pageAnalyticsMiddleware<T>({String tag = 'redux'}) {
     };
   };
 }
-

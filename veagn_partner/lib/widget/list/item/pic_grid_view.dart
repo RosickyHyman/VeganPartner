@@ -4,14 +4,17 @@ import 'package:partner/widget/list/common/utils/screen_util.dart';
 
 import 'crop_image.dart';
 
-const int maxPicGridViewCount = 9;
+// const int maxPicGridViewCount = 9;
 
 /// Grid view to show picture
 class PicGridView extends StatelessWidget {
   const PicGridView({
     @required this.tuChongItem,
+    this.maxPicGridViewCount = 9,
   });
   final TuChongItem tuChongItem;
+  final int maxPicGridViewCount;
+
   @override
   Widget build(BuildContext context) {
     if (!tuChongItem.hasImage) {

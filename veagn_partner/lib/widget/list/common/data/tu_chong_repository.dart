@@ -57,8 +57,6 @@ class PicInsectRepository extends LoadingMoreBase<TuChongItem> {
       // if (!kIsWeb) {
         final Response result = await HttpClientHelper.get(url);
         feedList = TuChongSource.fromJson(json.decode(result.body) as Map<String, dynamic>).feedList;
-
-        print(url);
       // } else {
       //   feedList = mockSource.feedList.getRange(length, length + 20).toList();
       // }
