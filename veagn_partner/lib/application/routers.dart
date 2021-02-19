@@ -8,6 +8,7 @@ import 'package:partner/application/home/index_page/page.dart';
 import 'package:partner/application/home/message_page/page.dart';
 import 'package:partner/application/home/mine_page/page.dart';
 import 'package:partner/application/home/mine_page/change_skin/page.dart';
+import 'package:partner/partner/gank/welfare/page.dart';
 
 import 'package:partner/partner/pic_insect/pic_insect_gallery/page.dart';
 import 'package:partner/partner/pic_insect/pic_insect_list_page/attention_page/page.dart';
@@ -42,6 +43,8 @@ class Routers {
       'recommend_page': RecommendPage(),
       'hot_page': HotPage(),
       'video_page': VideoPage(),
+
+      'wel_fare_page' : WelFarePage(),
     },
     visitor: (String path, Page<Object, dynamic> page) {
       /// 只有特定的范围的 Page 才需要建立和 AppStore 的连接关系

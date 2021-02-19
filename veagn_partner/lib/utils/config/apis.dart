@@ -11,3 +11,8 @@ class PicInsectApis {
 
   static final String getAttentionList = '/feed-app';
 }
+
+class GanApis {
+
+  static final String getWelfareList = '/data/%E7%A6%8F%E5%88%A9';
+}

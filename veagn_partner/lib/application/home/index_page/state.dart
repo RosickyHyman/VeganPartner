@@ -7,7 +7,7 @@ class IndexState implements Cloneable<IndexState> {
     {'type': 'recommend', 'title': '推荐'},
     {'type': 'hot', 'title': '热门'},
     {'type': 'video', 'title': '视频'},
-    {'type': 'chaiBan', 'title': '追番'},
+    {'type': 'welFare', 'title': '福利'},
     {'type': 'anti', 'title': '抗疫'},
     {'type': 'wellOff', 'title': '小康'},
   ];

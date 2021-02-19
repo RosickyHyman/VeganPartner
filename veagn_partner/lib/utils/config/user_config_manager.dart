@@ -17,5 +17,8 @@ class UserConfigManager {
 
   ///图虫地址
   String picInsectUrl = 'https://api.tuchong.com';
+
+  ///
+  String ganUrl = 'http://gank.io/api/';
 }
 

@@ -81,10 +81,12 @@ Widget _buildListView(IndexState state, Dispatch dispatch, ViewService viewServi
     case 'video':
       return Routers.router.buildPage('video_page', map);
       break;
-    case 'chaiBan':
-      return Container(
-        color: HexColor(CommonColors.greenTheme),
-      );
+    case 'welFare':
+      return Routers.router.buildPage('wel_fare_page', map);
+
+      // return Container(
+      //   color: HexColor(CommonColors.greenTheme),
+      // );
       break;
     case 'anti':
       return Container(

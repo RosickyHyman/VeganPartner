@@ -94,16 +94,18 @@ Widget _buildHotListView(RecommendState state, Dispatch dispatch, ViewService vi
                                     ],
                                   ),
                                 ),
-                                Padding(
-                                  child: ExtendedText(
-                                    content,
-                                    style: const TextStyle(fontSize: 14, color: Colors.grey),
-                                    maxLines: 10,
-                                    selectionEnabled: true,
-                                    textSelectionControls: state.textSelectionControls,
-                                  ),
-                                  padding: EdgeInsets.only(left: margin, right: margin, bottom: margin),
-                                ),
+                                content == ''
+                                    ? Container()
+                                    : Padding(
+                                        child: ExtendedText(
+                                          content,
+                                          style: const TextStyle(fontSize: 14, color: Colors.grey),
+                                          maxLines: 10,
+                                          selectionEnabled: true,
+                                          textSelectionControls: state.textSelectionControls,
+                                        ),
+                                        padding: EdgeInsets.only(left: margin, right: margin, bottom: margin),
+                                      ),
                                 Padding(
                                   padding: EdgeInsets.symmetric(horizontal: margin),
                                   child: buildTagsWidget(item),

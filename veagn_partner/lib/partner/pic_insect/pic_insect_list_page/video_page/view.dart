@@ -10,8 +10,6 @@ import 'package:partner/widget/list/common/data/tu_chong_repository.dart';
 import 'package:partner/widget/list/common/data/tu_chong_source.dart';
 import 'package:partner/widget/list/common/model/pic_swiper_item.dart';
 import 'package:partner/widget/list/common/utils/screen_util.dart';
-import 'package:partner/widget/list/item/crop_image.dart';
-import 'package:partner/widget/list/item/item_builder.dart';
 import 'package:partner/widget/list/item/pic_grid_view.dart';
 import 'package:partner/widget/list/item/push_to_refresh_header.dart';
 import 'package:pull_to_refresh_notification/pull_to_refresh_notification.dart';
