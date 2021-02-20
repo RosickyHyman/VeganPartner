@@ -31,13 +31,18 @@ Widget buildView(WelFareState state, Dispatch dispatch, ViewService viewService)
 
 /// 获取加载数据失败的布局
 Widget _buildListItem({WelFareState state, Map map, Dispatch dispatch, ViewService viewService}) {
+  // String imageUrl = 'https://photo.tuchong.com/${map['images'][0]['user_id']}/f/${map['images'][0]['img_id']}.jpg';
+
+  String imageUrl = map['url'];
+
+  print('==imageUrl==${imageUrl.toString()}');
   return GestureDetector(
     onTap: () {
       // 显示大图
       Navigator.push(
         viewService.context,
         MaterialPageRoute(
-            builder: (context) => _createBigImagePage(map['url'], () {
+            builder: (context) => _createBigImagePage(imageUrl, () {
                   Navigator.pop(viewService.context);
                 })),
       );
@@ -49,9 +54,9 @@ Widget _buildListItem({WelFareState state, Map map, Dispatch dispatch, ViewServi
       child: Padding(
         padding: const EdgeInsets.all(5),
         child: Hero(
-          tag: map['url'],
+          tag: imageUrl,
           child: CachedNetworkImage(
-            imageUrl: map['url'],
+            imageUrl: imageUrl,
             placeholder: (context, url) => Icon(Icons.image),
             errorWidget: (context, url, error) => Icon(Icons.broken_image),
           ),
@@ -71,7 +76,7 @@ Widget _createBigImagePage(String url, Function onPressed) {
           child: CachedNetworkImage(
             imageUrl: url,
             placeholder: (context, url) => Icon(Icons.image),
-            errorWidget: (context, url, error) => Icon(Icons.broken_image),
+            errorWidget: (context, url, error) => Icon(Icons.broken_image_rounded),
           ),
           onPressed: onPressed,
         ),

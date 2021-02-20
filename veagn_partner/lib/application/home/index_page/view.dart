@@ -83,10 +83,6 @@ Widget _buildListView(IndexState state, Dispatch dispatch, ViewService viewServi
       break;
     case 'welFare':
       return Routers.router.buildPage('wel_fare_page', map);
-
-      // return Container(
-      //   color: HexColor(CommonColors.greenTheme),
-      // );
       break;
     case 'anti':
       return Container(
